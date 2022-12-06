@@ -11,8 +11,6 @@ li {
 
 a {
     text-decoration: none;
-    color: white;
-
 }
 
 
@@ -35,34 +33,7 @@ a {
     grid-gap: 2px;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #4b9bbd;
-    grid-area: header;
-}
-
-.nav {
-    padding: 10px;
-    background-color: #4b9bbd;
-    grid-area: nav;
-
-}
-
-.content {
+.wrapper-content {
     grid-area: content;
-}
-
-.logo {
-    width: 60px;
-}
-
-.banner {
- width: 100%;
-}
-
-.avatar {
-    width: 100px;
-   border-radius: 50px;
+    background-color: aliceblue;
 }

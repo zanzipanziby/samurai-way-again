@@ -1,0 +1,19 @@
+.nav {
+    padding: 10px;
+    background-color: #4b9bbd;
+    grid-area: nav;
+
+}
+
+
+.nav a {
+    color: white;
+}
+
+.nav a:hover {
+    border-bottom: 1px solid white;
+}
+
+.nav a.active  {
+    font-weight: bold;
+}
