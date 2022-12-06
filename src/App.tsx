@@ -18,11 +18,11 @@ function App() {
                     <Header/>
                     <NavBar/>
                     <div className={"wrapper-content"}>
-                        <Route component={Dialogs} exact path={'/dialogs'}/>
-                        <Route component={Profile} exact path={'/profile'}/>
-                        <Route component={News} exact path={'/news'}/>
-                        <Route component={Music} exact path={'/music'}/>
-                        <Route component={Settings} exact path={'/settings'}/>
+                        <Route component={Dialogs} path={'/dialogs'}/>
+                        <Route component={Profile} path={'/profile'}/>
+                        <Route component={News} path={'/news'}/>
+                        <Route component={Music} path={'/music'}/>
+                        <Route component={Settings} path={'/settings'}/>
                     </div>
                 </div>
             </div>

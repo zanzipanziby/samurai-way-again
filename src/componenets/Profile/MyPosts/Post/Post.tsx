@@ -5,7 +5,8 @@ import avatar from './../../../../img/avatar/avatar.png'
 
 type PostPropsType = {
     message: string
-    likeCount: number
+    likesCount: number
+    id: string
 }
 
 
@@ -17,7 +18,7 @@ export const Post = (props: PostPropsType) => {
 
             <div>
                 <span>like </span>
-                <span>{props.likeCount}</span>
+                <span>{props.likesCount}</span>
             </div>
         </div>
     );

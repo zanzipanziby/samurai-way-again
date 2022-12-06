@@ -8,10 +8,9 @@
     border-right: 1px solid #4b9bbd;
 }
 
-.messages {
+.messagesList {
     padding: 10px;
 }
 
-.dialogsItem a {
-    color: #4b9bbd;
-}
+
+

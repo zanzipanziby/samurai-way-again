@@ -1,35 +1,50 @@
 import React from 'react';
 import s from './Dialogs.module.css'
 import {NavLink} from "react-router-dom";
+import {DialogItem} from "./DialogItem/DialogItem";
+import {Message} from "./Message/Message";
+
+type DialogsDataType = {
+    id: string
+    name: string
+}
+type MessagesDataType = {
+    id: string
+    message: string
+}
 
 export const Dialogs = () => {
-    return (
-        <div className={s.dialogs}>
-            <ul className={s.dialogsList}>
-                <li className={s.dialogsItem}>
-                    <NavLink to={"/dialogs/1"}>Dima</NavLink>
-                </li>
-                <li className={s.dialogsItem}>
-                    <NavLink to={"/dialogs/2"}>Misha</NavLink>
-                </li>
-                <li className={s.dialogsItem}>
-                    <NavLink to={"/dialogs/3"}>Vera</NavLink>
-                </li>
-                <li className={s.dialogsItem}>
-                    <NavLink to={"/dialogs/4"}>Svetlana</NavLink>
-                </li>
-                <li className={s.dialogsItem}>
-                    <NavLink to={"/dialogs/5"}>Jura</NavLink>
-                </li>
-            </ul>
-            <ul className={s.messages}>
-                <li className={s.message}>Hello</li>
-                <li className={s.message}>How are you?</li>
-                <li className={s.message}>How learning React for three month</li>
-                <li className={s.message}>Go playing in video games</li>
-                <li className={s.message}>Hey! Dude!</li>
-            </ul>
-        </div>
-    );
-};
+
+        const dialogsData: Array<DialogsDataType> = [
+            {id: '1', name: 'Dima'},
+            {id: '2', name: 'Misha'},
+            {id: '3', name: 'Vera'},
+            {id: '4', name: 'Svetlana'},
+            {id: '5', name: 'Jura'},
+        ]
+
+        const messagesData: Array<MessagesDataType> = [
+            {id: '1', message: "Hello"},
+            {id: '2', message: "How are you?"},
+            {id: '3', message: "How learning React for three month?"},
+            {id: '4', message: "Go playing in video games"},
+            {id: '5', message: "Hey! Dude!"},
+        ]
+
+        const renderDialogsItem = dialogsData.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+        const renderMessages = messagesData.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
+
+
+        return (
+            <div className={s.dialogs}>
+                <ul className={s.dialogsList}>
+                    {renderDialogsItem}
+                </ul>
+                <ul className={s.messagesList}>
+                    {renderMessages}
+                </ul>
+            </div>
+        );
+    }
+;
 
