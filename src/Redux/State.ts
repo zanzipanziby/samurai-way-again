@@ -27,12 +27,25 @@ export type StateType = {
 
 export type StoreType = {
     _state: StateType
-    getState: ()=> StateType
-    _callSubscriber: ()=> void
-    addPost: ()=> void
-    updateNewPostText:(newText: string)=> void
-    subscribe:(observer: () => void)=> void
+    getState: () => StateType
+    _callSubscriber: () => void
+    // addPost: () => void
+    // updateNewPostText: (newText: string) => void
+    subscribe: (observer: () => void) => void
+    dispatch: (action: any) => void
 
+}
+
+
+export type ActionType = AddPostActionType | UpdateNewPostText
+
+type AddPostActionType = {
+    type: "ADD_POST"
+}
+
+type UpdateNewPostText = {
+    type:"UPDATE_NEW_POST_TEXT",
+    text: string
 }
 
 export const store: StoreType = {
@@ -69,23 +82,31 @@ export const store: StoreType = {
     _callSubscriber() {
         console.log('state changed')
     },
-    addPost() {
-        const newPost: PostsDataType = {
-            id: new Date().getTime().toString(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ""
-        this._callSubscriber()
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber()
-    },
     subscribe(observer: () => void) {
         this._callSubscriber = observer
+    },
+
+
+
+    dispatch(action: ActionType) {
+        switch (action.type) {
+            case "ADD_POST":
+                const newPost: PostsDataType = {
+                    id: new Date().getTime().toString(),
+                    message: this._state.profilePage.newPostText,
+                    likesCount: 0
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._state.profilePage.newPostText = ""
+                this._callSubscriber()
+                break
+            case "UPDATE_NEW_POST_TEXT":
+                this._state.profilePage.newPostText = action.text
+                this._callSubscriber()
+                break
+        }
     }
+
 }
 
 // @ts-ignore
