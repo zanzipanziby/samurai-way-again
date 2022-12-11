@@ -1,15 +1,28 @@
-import React from 'react';
+import React, {RefObject} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
+import {PostsDataType} from "../../../Redux/State";
 
-export const MyPosts = () => {
 
-    const postsData = [
-        {id: "1", message: "Hello World", likesCount: 13},
-        {id: "2", message: "It's my first application", likesCount: 34},
-    ]
+type MyPostsPropsType = {
+    posts: PostsDataType[]
+    addPost: (message: string) => void
+}
 
-    const renderPosts = postsData.map(p => <li key={p.id}><Post message={p.message} likesCount={p.likesCount} id={p.id}/></li>)
+export const MyPosts = (props: MyPostsPropsType) => {
+
+    const newPostElement = React.createRef<HTMLTextAreaElement>()
+    const addPosts = () => {
+        if(newPostElement.current){
+            const text = newPostElement.current.value
+            props.addPost(text)
+            newPostElement.current.value = ''
+        }
+    }
+
+
+    const renderPosts = props.posts
+        .map(p => <li key={p.id}><Post message={p.message} likesCount={p.likesCount} id={p.id}/></li>)
 
     return (
         <div className={s.myPostsWrapper}>
@@ -18,10 +31,10 @@ export const MyPosts = () => {
             </h3>
             <div>
                 <div>
-                    <textarea/>
+                    <textarea ref={newPostElement}/>
                 </div>
                 <div>
-                    <button>add post</button>
+                    <button onClick={addPosts}>add post</button>
                 </div>
             </div>
             <ul className={s.postWrapper}>

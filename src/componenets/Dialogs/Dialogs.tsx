@@ -1,38 +1,22 @@
 import React from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
+import {DialogsDataType, MessagesDataType} from "../../Redux/State";
 
-type DialogsDataType = {
-    id: string
-    name: string
+
+
+type DialogsPropsType = {
+    state: {
+        dialogs: DialogsDataType[]
+        messages: MessagesDataType[]
+    }
 }
-type MessagesDataType = {
-    id: string
-    message: string
-}
 
-export const Dialogs = () => {
 
-        const dialogsData: Array<DialogsDataType> = [
-            {id: '1', name: 'Dima'},
-            {id: '2', name: 'Misha'},
-            {id: '3', name: 'Vera'},
-            {id: '4', name: 'Svetlana'},
-            {id: '5', name: 'Jura'},
-        ]
-
-        const messagesData: Array<MessagesDataType> = [
-            {id: '1', message: "Hello"},
-            {id: '2', message: "How are you?"},
-            {id: '3', message: "How learning React for three month?"},
-            {id: '4', message: "Go playing in video games"},
-            {id: '5', message: "Hey! Dude!"},
-        ]
-
-        const renderDialogsItem = dialogsData.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-        const renderMessages = messagesData.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
+export const Dialogs = (props: DialogsPropsType) => {
+        const renderDialogsItem = props.state.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+        const renderMessages = props.state.messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
 
 
         return (

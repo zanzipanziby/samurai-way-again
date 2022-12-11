@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import {Header} from "./componenets/Header/Header";
 import {NavBar} from "./componenets/Nav/NavBar";
 import {Profile} from "./componenets/Profile/Profile";
@@ -9,8 +8,14 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./componenets/News/News";
 import {Music} from "./componenets/Music/Music";
 import {Settings} from "./componenets/Settings/Settings";
+import {StateType} from "./Redux/State";
 
-function App() {
+type AppPropsType = {
+    state: StateType
+    addPost: (message: string) => void
+}
+
+function App(props: AppPropsType) {
     return (
         <BrowserRouter>
             <div className={"wrapper"}>
@@ -18,11 +23,19 @@ function App() {
                     <Header/>
                     <NavBar/>
                     <div className={"wrapper-content"}>
-                        <Route component={Dialogs} path={'/dialogs'}/>
-                        <Route component={Profile} path={'/profile'}/>
-                        <Route component={News} path={'/news'}/>
-                        <Route component={Music} path={'/music'}/>
-                        <Route component={Settings} path={'/settings'}/>
+                        <Route render={() =>
+                            <Profile
+                                state={props.state.profilePage}
+                                addPost={props.addPost}
+                            />}
+                               path={'/profile'}
+                        />
+                        <Route render={() => <Dialogs state={props.state.messagesPage}/>} path={'/dialogs'}/>
+                        <Route render={() => <News/>} path={'/news'}/>
+                        <Route render={() => <Music/>} path={'/music'}/>
+                        <Route render={() => <Settings/>} path={'/settings'}/>
+
+
                     </div>
                 </div>
             </div>
