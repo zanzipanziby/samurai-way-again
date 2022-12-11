@@ -25,8 +25,17 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 
+export type StoreType = {
+    _state: StateType
+    getState: ()=> StateType
+    _callSubscriber: ()=> void
+    addPost: ()=> void
+    updateNewPostText:(newText: string)=> void
+    subscribe:(observer: () => void)=> void
 
-export const store = {
+}
+
+export const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
