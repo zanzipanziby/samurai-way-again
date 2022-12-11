@@ -1,27 +1,36 @@
 import React, {RefObject} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {PostsDataType} from "../../../Redux/State";
+import {PostsDataType, ProfilePageType} from "../../../Redux/State";
 
 
 type MyPostsPropsType = {
-    posts: PostsDataType[]
-    addPost: (message: string) => void
+    state: ProfilePageType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 export const MyPosts = (props: MyPostsPropsType) => {
-
+    //---------------- Create RefLink on textarea ---------------------
     const newPostElement = React.createRef<HTMLTextAreaElement>()
+
+    //------------ Add Post ----------------
     const addPosts = () => {
-        if(newPostElement.current){
+        props.addPost()
+
+    }
+
+    //--------------- Add new text for new post -------------------
+    const ChangeNewPostTextInState = () => {
+        if (newPostElement.current) {
             const text = newPostElement.current.value
-            props.addPost(text)
-            newPostElement.current.value = ''
+            props.updateNewPostText(text)
+
         }
     }
 
 
-    const renderPosts = props.posts
+    const renderPosts = props.state.posts
         .map(p => <li key={p.id}><Post message={p.message} likesCount={p.likesCount} id={p.id}/></li>)
 
     return (
@@ -31,7 +40,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
             </h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}/>
+                    <textarea
+                        ref={newPostElement}
+                        value={props.state.newPostText}
+                        onChange={ChangeNewPostTextInState}
+                    />
                 </div>
                 <div>
                     <button onClick={addPosts}>add post</button>
