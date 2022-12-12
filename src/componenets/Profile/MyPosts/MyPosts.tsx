@@ -1,13 +1,17 @@
-import React, {RefObject} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {ActionType, PostsDataType, ProfilePageType} from "../../../Redux/State";
+import {ActionType, addPostAC, changeNewPostTextInStateAC, ProfilePageType} from "../../../Redux/State";
 
 
 type MyPostsPropsType = {
     state: ProfilePageType
-    dispatch: (action:ActionType)=> void
+    dispatch: (action: ActionType) => void
 }
+
+
+
+
 
 export const MyPosts = (props: MyPostsPropsType) => {
     //---------------- Create RefLink on textarea ---------------------
@@ -15,22 +19,24 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
     //------------ Add Post ----------------
     const addPosts = () => {
-        props.dispatch({type:"ADD_POST"})
+        props.dispatch(addPostAC())
 
     }
 
     //--------------- Add new text for new post -------------------
-    const ChangeNewPostTextInState = () => {
+    const changeNewPostTextInState = () => {
         if (newPostElement.current) {
             const text = newPostElement.current.value
-            props.dispatch({type:"UPDATE_NEW_POST_TEXT", text: text})
+            props.dispatch(changeNewPostTextInStateAC(text))
 
         }
     }
 
 
     const renderPosts = props.state.posts
-        .map(p => <li key={p.id}><Post message={p.message} likesCount={p.likesCount} id={p.id}/></li>)
+        .map(p => <li key={p.id}>
+            <Post message={p.message} likesCount={p.likesCount} id={p.id}/>
+        </li>)
 
     return (
         <div className={s.myPostsWrapper}>
@@ -42,7 +48,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
                     <textarea
                         ref={newPostElement}
                         value={props.state.newPostText}
-                        onChange={ChangeNewPostTextInState}
+                        onChange={changeNewPostTextInState}
                     />
                 </div>
                 <div>

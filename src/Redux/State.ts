@@ -1,3 +1,5 @@
+//---------------- Types for Store  -----------------------
+
 export type DialogsDataType = {
     id: string
     name: string
@@ -36,17 +38,26 @@ export type StoreType = {
 
 }
 
+//---------------  Create Action Creator --------------------
+export type ActionType = addPostACType | changeNewPostTextInStateACType
+type addPostACType = ReturnType<typeof addPostAC>
 
-export type ActionType = AddPostActionType | UpdateNewPostText
-
-type AddPostActionType = {
-    type: "ADD_POST"
+export const addPostAC = () => {
+    return {
+        type: "ADD_POST"
+    } as const
 }
 
-type UpdateNewPostText = {
-    type:"UPDATE_NEW_POST_TEXT",
-    text: string
+type changeNewPostTextInStateACType = ReturnType<typeof changeNewPostTextInStateAC>
+export const changeNewPostTextInStateAC = (text: string) => {
+    return {
+        type: "UPDATE_NEW_POST_TEXT",
+        payload: {
+            text
+        }
+    }as const
 }
+
 
 export const store: StoreType = {
     _state: {
@@ -87,7 +98,6 @@ export const store: StoreType = {
     },
 
 
-
     dispatch(action: ActionType) {
         switch (action.type) {
             case "ADD_POST":
@@ -101,7 +111,7 @@ export const store: StoreType = {
                 this._callSubscriber()
                 break
             case "UPDATE_NEW_POST_TEXT":
-                this._state.profilePage.newPostText = action.text
+                this._state.profilePage.newPostText = action.payload.text
                 this._callSubscriber()
                 break
         }
@@ -113,56 +123,3 @@ export const store: StoreType = {
 window.store = store
 
 
-//
-// let rerenderEntireTree = () => {
-//     console.log('state changed')
-// }
-//
-// export const subscribe = (observer: () => void) => {
-//     rerenderEntireTree = observer
-// }
-//
-//
-// export const state: StateType = {
-//     profilePage: {
-//         posts: [
-//             {id: "1", message: "Hello World", likesCount: 13},
-//             {id: "2", message: "It's my first application", likesCount: 34},
-//         ],
-//         newPostText: ""
-//     },
-//     messagesPage: {
-//         dialogs: [
-//             {id: '1', name: 'Dima'},
-//             {id: '2', name: 'Misha'},
-//             {id: '3', name: 'Vera'},
-//             {id: '4', name: 'Svetlana'},
-//             {id: '5', name: 'Jura'},
-//         ],
-//         messages: [
-//             {id: '1', message: "Hello"},
-//             {id: '2', message: "How are you?"},
-//             {id: '3', message: "How learning React for three month?"},
-//             {id: '4', message: "Go playing in video games"},
-//             {id: '5', message: "Hey! Dude!"},
-//         ]
-//     }
-//
-//
-// }
-//
-// export const addPost = () => {
-//     const newPost: PostsDataType = {
-//         id: new Date().getTime().toString(),
-//         message: state.profilePage.newPostText,
-//         likesCount: 0
-//     }
-//     state.profilePage.posts.push(newPost)
-//     state.profilePage.newPostText = ""
-//     rerenderEntireTree()
-// }
-//
-// export const updateNewPostText = (newText: string) => {
-//     state.profilePage.newPostText = newText
-//     rerenderEntireTree()
-// }
