@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {ActionType, addPostAC, changeNewPostTextInStateAC, ProfilePageType} from "../../../Redux/State";
@@ -15,7 +15,7 @@ type MyPostsPropsType = {
 
 export const MyPosts = (props: MyPostsPropsType) => {
     //---------------- Create RefLink on textarea ---------------------
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
+
 
     //------------ Add Post ----------------
     const addPosts = () => {
@@ -24,12 +24,8 @@ export const MyPosts = (props: MyPostsPropsType) => {
     }
 
     //--------------- Add new text for new post -------------------
-    const changeNewPostTextInState = () => {
-        if (newPostElement.current) {
-            const text = newPostElement.current.value
-            props.dispatch(changeNewPostTextInStateAC(text))
-
-        }
+    const changeNewPostTextInState = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            props.dispatch(changeNewPostTextInStateAC(e.currentTarget.value))
     }
 
 
@@ -46,7 +42,6 @@ export const MyPosts = (props: MyPostsPropsType) => {
             <div>
                 <div>
                     <textarea
-                        ref={newPostElement}
                         value={props.state.newPostText}
                         onChange={changeNewPostTextInState}
                     />

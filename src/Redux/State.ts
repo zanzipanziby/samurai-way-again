@@ -17,6 +17,7 @@ export type PostsDataType = {
 export type MessagePageType = {
     dialogs: Array<DialogsDataType>
     messages: Array<MessagesDataType>
+    newMessageText: string
 }
 export type ProfilePageType = {
     posts: Array<PostsDataType>
@@ -34,17 +35,20 @@ export type StoreType = {
     // addPost: () => void
     // updateNewPostText: (newText: string) => void
     subscribe: (observer: () => void) => void
-    dispatch: (action: any) => void
+    dispatch: (action: ActionType) => void
 
 }
 
 //---------------  Create Action Creator --------------------
-export type ActionType = addPostACType | changeNewPostTextInStateACType
-type addPostACType = ReturnType<typeof addPostAC>
+export type ActionType = addPostACType
+    | changeNewPostTextInStateACType
+    | changeNewMessageTextInStateACType
+    | sendMessageACType
 
+type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = () => {
     return {
-        type: "ADD_POST"
+        type: "ADD_POST",
     } as const
 }
 
@@ -55,7 +59,24 @@ export const changeNewPostTextInStateAC = (text: string) => {
         payload: {
             text
         }
-    }as const
+    } as const
+}
+type sendMessageACType = ReturnType<typeof sendMessageAC>
+export const sendMessageAC = () => {
+    return {
+        type: "SEND_MESSAGE"
+    } as const
+}
+
+type changeNewMessageTextInStateACType = ReturnType<typeof changeNewMessageTextInStateAC>
+export const changeNewMessageTextInStateAC = (text: string) => {
+    return {
+        type: "UPDATE_NEW_MESSAGE_TEXT",
+        payload: {
+            text
+        }
+    } as const
+
 }
 
 
@@ -82,7 +103,8 @@ export const store: StoreType = {
                 {id: '3', message: "How learning React for three month?"},
                 {id: '4', message: "Go playing in video games"},
                 {id: '5', message: "Hey! Dude!"},
-            ]
+            ],
+            newMessageText: ""
         }
 
 
@@ -106,12 +128,28 @@ export const store: StoreType = {
                     message: this._state.profilePage.newPostText,
                     likesCount: 0
                 }
+                this._state.profilePage.newPostText &&
                 this._state.profilePage.posts.push(newPost)
                 this._state.profilePage.newPostText = ""
                 this._callSubscriber()
                 break
             case "UPDATE_NEW_POST_TEXT":
                 this._state.profilePage.newPostText = action.payload.text
+                this._callSubscriber()
+                break
+            case "SEND_MESSAGE":
+                const newMessage: MessagesDataType =  {
+                    id: new Date().getTime().toString(),
+                    message: this._state.messagesPage.newMessageText
+                }
+                this._state.messagesPage.newMessageText &&
+                this._state.messagesPage.messages.push(newMessage)
+                this._state.messagesPage.newMessageText = ""
+                this._callSubscriber()
+                break
+
+            case "UPDATE_NEW_MESSAGE_TEXT":
+                this._state.messagesPage.newMessageText = action.payload.text
                 this._callSubscriber()
                 break
         }
