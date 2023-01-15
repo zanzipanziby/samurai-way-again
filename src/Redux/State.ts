@@ -1,5 +1,8 @@
 //---------------- Types for Store  -----------------------
 
+import {addPostACType, changeNewPostTextInStateACType, ProfilePageReducer} from "./ProfilePageReducer";
+import {changeNewMessageTextInStateACType, MessagePageReducer, sendMessageACType} from "./MessagePageReducer";
+
 export type DialogsDataType = {
     id: string
     name: string
@@ -45,39 +48,6 @@ export type ActionType = addPostACType
     | changeNewMessageTextInStateACType
     | sendMessageACType
 
-type addPostACType = ReturnType<typeof addPostAC>
-export const addPostAC = () => {
-    return {
-        type: "ADD_POST",
-    } as const
-}
-
-type changeNewPostTextInStateACType = ReturnType<typeof changeNewPostTextInStateAC>
-export const changeNewPostTextInStateAC = (text: string) => {
-    return {
-        type: "UPDATE_NEW_POST_TEXT",
-        payload: {
-            text
-        }
-    } as const
-}
-type sendMessageACType = ReturnType<typeof sendMessageAC>
-export const sendMessageAC = () => {
-    return {
-        type: "SEND_MESSAGE"
-    } as const
-}
-
-type changeNewMessageTextInStateACType = ReturnType<typeof changeNewMessageTextInStateAC>
-export const changeNewMessageTextInStateAC = (text: string) => {
-    return {
-        type: "UPDATE_NEW_MESSAGE_TEXT",
-        payload: {
-            text
-        }
-    } as const
-
-}
 
 
 export const store: StoreType = {
@@ -118,41 +88,10 @@ export const store: StoreType = {
     subscribe(observer: () => void) {
         this._callSubscriber = observer
     },
-
-
     dispatch(action: ActionType) {
-        switch (action.type) {
-            case "ADD_POST":
-                const newPost: PostsDataType = {
-                    id: new Date().getTime().toString(),
-                    message: this._state.profilePage.newPostText,
-                    likesCount: 0
-                }
-                this._state.profilePage.newPostText &&
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.newPostText = ""
-                this._callSubscriber()
-                break
-            case "UPDATE_NEW_POST_TEXT":
-                this._state.profilePage.newPostText = action.payload.text
-                this._callSubscriber()
-                break
-            case "SEND_MESSAGE":
-                const newMessage: MessagesDataType =  {
-                    id: new Date().getTime().toString(),
-                    message: this._state.messagesPage.newMessageText
-                }
-                this._state.messagesPage.newMessageText &&
-                this._state.messagesPage.messages.push(newMessage)
-                this._state.messagesPage.newMessageText = ""
-                this._callSubscriber()
-                break
-
-            case "UPDATE_NEW_MESSAGE_TEXT":
-                this._state.messagesPage.newMessageText = action.payload.text
-                this._callSubscriber()
-                break
-        }
+        this._state.profilePage = ProfilePageReducer(this._state.profilePage, action)
+        this._state.messagesPage = MessagePageReducer(this._state.messagesPage, action)
+        this._callSubscriber()
     }
 
 }

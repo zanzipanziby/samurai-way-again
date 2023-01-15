@@ -1,7 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {ActionType, addPostAC, changeNewPostTextInStateAC, ProfilePageType} from "../../../Redux/State";
+import {ActionType, ProfilePageType} from "../../../Redux/State";
+import {addPostAC, changeNewPostTextInStateAC} from "../../../Redux/ProfilePageReducer";
+
 
 
 type MyPostsPropsType = {
@@ -53,7 +55,6 @@ export const MyPosts = (props: MyPostsPropsType) => {
             <ul className={s.postWrapper}>
                 {renderPosts}
             </ul>
-
         </div>
     );
 };
