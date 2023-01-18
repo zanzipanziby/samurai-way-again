@@ -13,7 +13,7 @@ import {ReduxStoreType} from "./Redux/redux-store";
 import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    store: ReduxStoreType
+
 }
 
 function App(props: AppPropsType) {
@@ -25,12 +25,8 @@ function App(props: AppPropsType) {
                 <Header/>
                 <NavBar/>
                 <div className={"wrapper-content"}>
-                    <Route render={() =>
-                        <Profile
-                            store={props.store}
-                        />} path={'/profile'}
-                    />
-                    <Route render={() => <DialogsContainer store={props.store}/>} path={'/dialogs'}/>
+                    <Route render={() => <Profile/>} path={'/profile'}/>
+                    <Route render={() => <DialogsContainer />} path={'/dialogs'}/>
                     <Route render={() => <News/>} path={'/news'}/>
                     <Route render={() => <Music/>} path={'/music'}/>
                     <Route render={() => <Settings/>} path={'/settings'}/>

@@ -6,36 +6,57 @@ import {ActionType, MessagePageType} from "../../Redux/store";
 import {changeNewMessageTextInStateAC, sendMessageAC} from "../../Redux/messagePageReducer";
 import {ReduxStoreType} from "../../Redux/redux-store";
 import {Dialogs} from "./Dialogs";
+import {StoreContext} from "../../StoreContext";
 
 
-
-type DialogsContainerPropsType = {
-   store: ReduxStoreType
-}
+type DialogsContainerPropsType = {}
 
 
 export const DialogsContainer = (props: DialogsContainerPropsType) => {
-    const state = props.store.getState()
-    const dispatch = props.store.dispatch
-
-
-
-    const sendMessage = () => {
-        dispatch(sendMessageAC())
-    }
-
-    const changeNewMessageTextInState = (text: string) => {
-        dispatch(changeNewMessageTextInStateAC(text))
-    }
+    // const state = props.store.getState()
+    // const dispatch = props.store.dispatch
+    //
+    //
+    // const sendMessage = () => {
+    //     dispatch(sendMessageAC())
+    // }
+    //
+    // const changeNewMessageTextInState = (text: string) => {
+    //     dispatch(changeNewMessageTextInStateAC(text))
+    // }
 
 
     return (
-       <Dialogs
-           dialogs={state.messagesPage.dialogs}
-           messages={state.messagesPage.messages}
-           newMessageText={state.messagesPage.newMessageText}
-           sendMessage={sendMessage}
-           updateMessageText={changeNewMessageTextInState}/>
+
+        <StoreContext.Consumer>
+            {
+                (store: ReduxStoreType) => {
+                    const state = store.getState()
+                    const dispatch = store.dispatch
+
+
+                    const sendMessage = () => {
+                        dispatch(sendMessageAC())
+                    }
+
+                    const changeNewMessageTextInState = (text: string) => {
+                        dispatch(changeNewMessageTextInStateAC(text))
+                    }
+
+                    return (
+                        <Dialogs
+                            dialogs={state.messagesPage.dialogs}
+                            messages={state.messagesPage.messages}
+                            newMessageText={state.messagesPage.newMessageText}
+                            sendMessage={sendMessage}
+                            updateMessageText={changeNewMessageTextInState}
+                        />
+                    )
+                }
+            }
+        </StoreContext.Consumer>
+
+
     );
 }
 
