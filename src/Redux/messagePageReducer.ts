@@ -1,8 +1,24 @@
-import {ActionType, MessagePageType, MessagesDataType, PostsDataType} from "./State";
+import {ActionType, MessagePageType, MessagesDataType} from "./store";
 
 
-
-export const MessagePageReducer = (state: MessagePageType, action: ActionType) => {
+let initialMessagePageState: MessagePageType = {
+    dialogs: [
+        {id: '1', name: 'Dima'},
+        {id: '2', name: 'Misha'},
+        {id: '3', name: 'Vera'},
+        {id: '4', name: 'Svetlana'},
+        {id: '5', name: 'Jura'},
+    ],
+    messages: [
+        {id: '1', message: "Hello"},
+        {id: '2', message: "How are you?"},
+        {id: '3', message: "How learning React for three month?"},
+        {id: '4', message: "Go playing in video games"},
+        {id: '5', message: "Hey! Dude!"},
+    ],
+    newMessageText: ""
+}
+export const messagePageReducer = (state: MessagePageType = initialMessagePageState, action: ActionType) => {
     switch (action.type) {
         case "SEND_MESSAGE":
             const newMessage: MessagesDataType = {

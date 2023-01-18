@@ -8,7 +8,7 @@ import {Route} from "react-router-dom";
 import {News} from "./componenets/News/News";
 import {Music} from "./componenets/Music/Music";
 import {Settings} from "./componenets/Settings/Settings";
-import {ActionType, StateType} from "./Redux/State";
+import {ActionType, StateType} from "./Redux/store";
 
 type AppPropsType = {
     state: StateType
@@ -16,6 +16,7 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
+
     return (
 
         <div className={"wrapper"}>

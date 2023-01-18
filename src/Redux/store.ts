@@ -1,7 +1,7 @@
 //---------------- Types for Store  -----------------------
 
-import {addPostACType, changeNewPostTextInStateACType, ProfilePageReducer} from "./ProfilePageReducer";
-import {changeNewMessageTextInStateACType, MessagePageReducer, sendMessageACType} from "./MessagePageReducer";
+import {addPostACType, changeNewPostTextInStateACType, profilePageReducer} from "./profilePageReducer";
+import {changeNewMessageTextInStateACType, messagePageReducer, sendMessageACType} from "./messagePageReducer";
 
 export type DialogsDataType = {
     id: string
@@ -89,8 +89,8 @@ export const store: StoreType = {
         this._callSubscriber = observer
     },
     dispatch(action: ActionType) {
-        this._state.profilePage = ProfilePageReducer(this._state.profilePage, action)
-        this._state.messagesPage = MessagePageReducer(this._state.messagesPage, action)
+        this._state.profilePage = profilePageReducer(this._state.profilePage, action)
+        this._state.messagesPage = messagePageReducer(this._state.messagesPage, action)
         this._callSubscriber()
     }
 
