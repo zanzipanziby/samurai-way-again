@@ -9,10 +9,11 @@ import {News} from "./componenets/News/News";
 import {Music} from "./componenets/Music/Music";
 import {Settings} from "./componenets/Settings/Settings";
 import {ActionType, StateType} from "./Redux/store";
+import {ReduxStoreType} from "./Redux/redux-store";
+import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: ActionType) => void
+    store: ReduxStoreType
 }
 
 function App(props: AppPropsType) {
@@ -26,15 +27,10 @@ function App(props: AppPropsType) {
                 <div className={"wrapper-content"}>
                     <Route render={() =>
                         <Profile
-                            state={props.state.profilePage}
-                            dispatch={props.dispatch}
+                            store={props.store}
                         />} path={'/profile'}
                     />
-                    <Route render={() =>
-                        <Dialogs
-                            state={props.state.messagesPage}
-                            dispatch={props.dispatch}
-                        />} path={'/dialogs'}/>
+                    <Route render={() => <DialogsContainer store={props.store}/>} path={'/dialogs'}/>
                     <Route render={() => <News/>} path={'/news'}/>
                     <Route render={() => <Music/>} path={'/music'}/>
                     <Route render={() => <Settings/>} path={'/settings'}/>

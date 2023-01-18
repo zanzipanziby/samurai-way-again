@@ -2,28 +2,31 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {ActionType, MessagePageType} from "../../Redux/store";
+import {ActionType, DialogsDataType, MessagePageType, MessagesDataType} from "../../Redux/store";
 import {changeNewMessageTextInStateAC, sendMessageAC} from "../../Redux/messagePageReducer";
 
 
 
 type DialogsPropsType = {
-    state: MessagePageType
-    dispatch: (action: ActionType) => void
+    dialogs: DialogsDataType[]
+    messages: MessagesDataType[]
+    newMessageText: string
+    sendMessage: ()=> void
+    updateMessageText: (text: string) => void
 }
 
 
 export const Dialogs = (props: DialogsPropsType) => {
-    const renderDialogsItem = props.state.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
-    const renderMessages = props.state.messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
+    const renderDialogsItem = props.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name}/>)
+    const renderMessages = props.messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
 
 
     const sendMessage = () => {
-        props.dispatch(sendMessageAC())
+        props.sendMessage()
     }
 
     const changeNewMessageTextInState = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewMessageTextInStateAC(e.currentTarget.value))
+         props.updateMessageText(e.currentTarget.value)
     }
 
 
@@ -40,7 +43,7 @@ export const Dialogs = (props: DialogsPropsType) => {
                 </ul>
                 <div>
                     <textarea
-                        value={props.state.newMessageText}
+                        value={props.newMessageText}
                         onChange={changeNewMessageTextInState}
                         placeholder={'Enter your message'}
                     />

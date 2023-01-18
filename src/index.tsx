@@ -11,9 +11,7 @@ export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App
-                state={store.getState()}
-                dispatch={store.dispatch.bind(store)}
-
+                store={store}
             />
         </BrowserRouter>,
         document.getElementById('root')
