@@ -26,6 +26,7 @@ export const Dialogs = (props: DialogsPropsType) => {
     }
 
     const changeNewMessageTextInState = (e: ChangeEvent<HTMLTextAreaElement>) => {
+
          props.updateMessageText(e.currentTarget.value)
     }
 

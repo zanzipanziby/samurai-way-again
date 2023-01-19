@@ -23,16 +23,16 @@ export const messagePageReducer = (state: MessagePageType = initialMessagePageSt
         case "SEND_MESSAGE":
             const newMessage: MessagesDataType = {
                 id: new Date().getTime().toString(),
-                message: state.newMessageText
+                message: state.newMessageText.trim()
             }
-            state.newMessageText &&
-            state.messages.push(newMessage)
-            state.newMessageText = ""
-            return state
+
+            return newMessage.message
+                ? {...state, messages: [...state.messages, newMessage], newMessageText: ''}
+                : {...state, newMessageText: ''}
+
 
         case "UPDATE_NEW_MESSAGE_TEXT":
-            state.newMessageText = action.payload.text
-            return state
+            return {...state, newMessageText: action.payload.text}
         default:
             return state
     }

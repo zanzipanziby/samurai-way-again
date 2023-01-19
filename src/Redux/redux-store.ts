@@ -12,3 +12,9 @@ let reducers = combineReducers({
 export type ReduxStoreType =  Store<EmptyObject & {profilePage: ProfilePageType, messagesPage: MessagePageType}, ActionType>
 
 export let store: ReduxStoreType = createStore(reducers)
+
+
+
+
+// @ts-ignore
+window.store = store

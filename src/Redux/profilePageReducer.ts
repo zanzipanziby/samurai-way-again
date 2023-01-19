@@ -14,16 +14,14 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
         case "ADD_POST":
             const newPost: PostsDataType = {
                 id: new Date().getTime().toString(),
-                message: state.newPostText,
+                message: state.newPostText.trim(),
                 likesCount: 0
             }
-            state.newPostText &&
-            state.posts.push(newPost)
-            state.newPostText = ""
-            return state
+            return newPost.message
+                ? {...state, posts: [...state.posts, newPost], newPostText:''}
+                : {...state, newPostText: ''}
         case "UPDATE_NEW_POST_TEXT":
-            state.newPostText = action.payload.text
-            return state
+            return {...state, newPostText: action.payload.text}
         default:
             return state
 
