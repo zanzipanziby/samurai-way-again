@@ -1,4 +1,4 @@
-import {ActionType, MessagePageType, MessagesDataType} from "./store";
+import {ActionType, MessagePageType, MessagesDataType} from "./StateAndActionTypes";
 
 
 let initialMessagePageState: MessagePageType = {

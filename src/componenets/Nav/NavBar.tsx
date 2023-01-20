@@ -21,6 +21,10 @@ export const NavBar = () => {
                 <li className={s.item}>
                     <NavLink to="/settings" activeClassName={s.active}>Settings</NavLink>
                 </li>
+                <br/>
+                <li className={s.item}>
+                    <NavLink to="/users" activeClassName={s.active}>Users</NavLink>
+                </li>
             </ul>
         </nav>
     );

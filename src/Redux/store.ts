@@ -1,35 +1,9 @@
 //---------------- Types for Store  -----------------------
 
-import {addPostACType, changeNewPostTextInStateACType, profilePageReducer} from "./profilePageReducer";
-import {changeNewMessageTextInStateACType, messagePageReducer, sendMessageACType} from "./messagePageReducer";
+import {profilePageReducer} from "./profilePageReducer";
+import {messagePageReducer} from "./messagePageReducer";
+import {ActionType, StateType} from "./StateAndActionTypes";
 
-export type DialogsDataType = {
-    id: string
-    name: string
-}
-export type MessagesDataType = {
-    id: string
-    message: string
-}
-export type PostsDataType = {
-    id: string
-    message: string
-    likesCount: number
-
-}
-export type MessagePageType = {
-    dialogs: Array<DialogsDataType>
-    messages: Array<MessagesDataType>
-    newMessageText: string
-}
-export type ProfilePageType = {
-    posts: Array<PostsDataType>
-    newPostText: string
-}
-export type StateType = {
-    messagesPage: MessagePageType
-    profilePage: ProfilePageType
-}
 
 export type StoreType = {
     _state: StateType
@@ -42,12 +16,7 @@ export type StoreType = {
 
 }
 
-//---------------  Create Action Creator --------------------
-export type ActionType = addPostACType
-    | changeNewPostTextInStateACType
-    | changeNewMessageTextInStateACType
-    | sendMessageACType
-
+// -----------------  ActionsType -----------------
 
 
 export const store: StoreType = {
@@ -75,6 +44,9 @@ export const store: StoreType = {
                 {id: '5', message: "Hey! Dude!"},
             ],
             newMessageText: ""
+        },
+        usersPage: {
+            users:[]
         }
 
 

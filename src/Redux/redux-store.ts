@@ -1,16 +1,17 @@
-import {combineReducers, createStore, EmptyObject, Store} from "redux";
+import {combineReducers, createStore} from "redux";
 import {profilePageReducer} from "./profilePageReducer";
 import {messagePageReducer} from "./messagePageReducer";
-import {ActionType, MessagePageType, ProfilePageType} from "./store";
+import {UsersPageReducer} from "./usersPageReducer";
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
-    messagesPage:messagePageReducer
+    messagesPage:messagePageReducer,
+    usersPage: UsersPageReducer
 });
 
 
-export type ReduxStoreType =  Store<EmptyObject & {profilePage: ProfilePageType, messagesPage: MessagePageType}, ActionType>
 
+type ReduxStoreType = ReturnType<typeof createStore>
 export let store: ReduxStoreType = createStore(reducers)
 
 
