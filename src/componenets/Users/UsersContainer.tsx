@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {Users} from "./Users";
-import {ActionType, StateType, UserType} from "../../Redux/StateAndActionTypes";
+import {ActionType, StateType, UserType, UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
 import {changeFollowStatusAC, setUsersAC} from "../../Redux/usersPageReducer";
 
 
@@ -12,10 +12,10 @@ const mapStateToProps = (state: StateType) => {
 }
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
-        setUsers: (users: UserType[]) => {
+        setUsers: (users: UserTypeWithoutServer[]) => {
             dispatch(setUsersAC(users))
         },
-        changeFollowStatus: (id: string, followStatus: boolean) =>{
+        changeFollowStatus: (id: number, followStatus: boolean) =>{
             dispatch(changeFollowStatusAC(id,followStatus))
         }
     }

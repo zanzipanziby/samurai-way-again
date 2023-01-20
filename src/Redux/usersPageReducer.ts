@@ -1,4 +1,4 @@
-import {ActionType, UsersPageType, UserType} from "./StateAndActionTypes";
+import {ActionType, UsersPageType, UserType, UserTypeWithoutServer} from "./StateAndActionTypes";
 import avatarVeronika from './../img/avatar/usersAvatar/Veronika.png'
 import avatarMisha from './../img/avatar/usersAvatar/1644932113_1-kartinkin-net-p-boss-molokosos-kartinki-1.png'
 import avatarJura from './../img/avatar/usersAvatar/Jura.png'
@@ -31,7 +31,7 @@ export const UsersPageReducer = (state: UsersPageType = initialState, action: Ac
 }
 
 export type ChangeFollowStatusACType = ReturnType<typeof changeFollowStatusAC>
-export const changeFollowStatusAC = (id: string, followStatus: boolean) => {
+export const changeFollowStatusAC = (id: number, followStatus: boolean) => {
     return {
         type: "CHANGE_FOLLOW_STATUS",
         payload: {
@@ -42,7 +42,7 @@ export const changeFollowStatusAC = (id: string, followStatus: boolean) => {
 }
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
-export const setUsersAC = (users: Array<UserType>) => {
+export const setUsersAC = (users: Array<UserTypeWithoutServer>) => {
     return {
         type: "SET_USERS",
         payload: {

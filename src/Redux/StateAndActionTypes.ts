@@ -37,8 +37,20 @@ export type UserType = {
     followed: boolean
     location: LocationType
 }
+export type UserTypeWithoutServer =  {
+    name: string,
+    id: number,
+    uniqueUrlName: null,
+    photos: {
+        small: null,
+        large: null
+    },
+    "status": null,
+    "followed": boolean
+}
 export type UsersPageType = {
-    users: Array<UserType>
+    // users: Array<UserType>
+    users:UserTypeWithoutServer[]
 }
 export type StateType = {
     messagesPage: MessagePageType
