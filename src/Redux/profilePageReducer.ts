@@ -1,10 +1,11 @@
 import {ActionType, PostsDataType, ProfilePageType} from "./StateAndActionTypes";
+import {v1} from "uuid";
 
 
 let initialProfilePageState: ProfilePageType =  {
     posts: [
-        {id: "1", message: "Hello World", likesCount: 13},
-        {id: "2", message: "It's my first application", likesCount: 34},
+        {id: v1(), message: "Hello World", likesCount: 13},
+        {id: v1(), message: "It's my first application", likesCount: 34},
     ],
         newPostText: ""
 }
@@ -12,7 +13,7 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
     switch (action.type) {
         case "ADD_POST":
             const newPost: PostsDataType = {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 message: state.newPostText.trim(),
                 likesCount: 0
             }

@@ -7,6 +7,7 @@ import avatarJura from "../../img/avatar/usersAvatar/Jura.png";
 import avatarSvetlana
     from "../../img/avatar/usersAvatar/png-transparent-computer-icons-woman-avatar-woman-people-woman-user.png";
 import avatarOzzy from "../../img/avatar/usersAvatar/ozzy.png";
+import {v1} from "uuid";
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -72,7 +73,7 @@ export const Users = (props: UsersPropsType) => {
     if (props.users.length === 0) {
         props.setUsers([
             {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 avatar: avatarMisha,
                 fullName: "Misha",
                 status: "I'm the son of a boss",
@@ -83,7 +84,7 @@ export const Users = (props: UsersPropsType) => {
                 }
             },
             {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 avatar: avatarVeronika,
                 fullName: "Veronika", status: "I'm the wife of a boss",
                 followed: true,
@@ -93,7 +94,7 @@ export const Users = (props: UsersPropsType) => {
                 }
             },
             {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 avatar: avatarJura,
                 fullName: "Jura", status: "I'm the son of a boss",
                 followed: true,
@@ -103,7 +104,7 @@ export const Users = (props: UsersPropsType) => {
                 }
             },
             {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 avatar: avatarSvetlana,
                 fullName: "Svetlana", status: "I'm the mom of a boss",
                 followed: true,
@@ -113,7 +114,7 @@ export const Users = (props: UsersPropsType) => {
                 }
             },
             {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 avatar: avatarOzzy,
                 fullName: "Ozzy", status: "I'm rock-man",
                 followed: false,
@@ -135,7 +136,10 @@ export const Users = (props: UsersPropsType) => {
                             <img src= {u.avatar} alt={u.fullName}/>
                         </div>
                         <div>
-                            <button className={s.followButton}>
+                            <button
+                                className={s.followButton}
+                                onClick={()=>props.changeFollowStatus(u.id, !u.followed)}
+                            >
                                 {u.followed ? 'Unfollow' : 'Follow'}
                             </button>
                         </div>

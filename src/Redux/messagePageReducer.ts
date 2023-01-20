@@ -1,20 +1,21 @@
 import {ActionType, MessagePageType, MessagesDataType} from "./StateAndActionTypes";
+import {v1} from "uuid";
 
 
 let initialMessagePageState: MessagePageType = {
     dialogs: [
-        {id: '1', name: 'Dima'},
-        {id: '2', name: 'Misha'},
-        {id: '3', name: 'Vera'},
-        {id: '4', name: 'Svetlana'},
-        {id: '5', name: 'Jura'},
+        {id: v1(), name: 'Dima'},
+        {id: v1(), name: 'Misha'},
+        {id: v1(), name: 'Vera'},
+        {id: v1(), name: 'Svetlana'},
+        {id: v1(), name: 'Jura'},
     ],
     messages: [
-        {id: '1', message: "Hello"},
-        {id: '2', message: "How are you?"},
-        {id: '3', message: "How learning React for three month?"},
-        {id: '4', message: "Go playing in video games"},
-        {id: '5', message: "Hey! Dude!"},
+        {id: v1(), message: "Hello"},
+        {id: v1(), message: "How are you?"},
+        {id: v1(), message: "How learning React for three month?"},
+        {id: v1(), message: "Go playing in video games"},
+        {id: v1(), message: "Hey! Dude!"},
     ],
     newMessageText: ""
 }
@@ -22,7 +23,7 @@ export const messagePageReducer = (state: MessagePageType = initialMessagePageSt
     switch (action.type) {
         case "SEND_MESSAGE":
             const newMessage: MessagesDataType = {
-                id: new Date().getTime().toString(),
+                id: v1(),
                 message: state.newMessageText.trim()
             }
 
