@@ -46,7 +46,10 @@ export const store: StoreType = {
             newMessageText: ""
         },
         usersPage: {
-            users:[]
+            users: [],
+            pageSize: 0,
+            totalUsersCount: 0,
+            currentPage: 1
         }
 
 

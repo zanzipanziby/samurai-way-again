@@ -1,6 +1,12 @@
 import {addPostACType, changeNewPostTextInStateACType} from "./profilePageReducer";
 import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePageReducer";
-import {ChangeFollowStatusACType, SetUsersACType} from "./usersPageReducer";
+import {
+    ChangeFollowStatusACType,
+    SetCurrentPageACType,
+    setTotalUsersCountAC,
+    SetTotalUsersCountACType,
+    SetUsersACType
+} from "./usersPageReducer";
 
 export type DialogsDataType = {
     id: string
@@ -37,7 +43,7 @@ export type UserType = {
     followed: boolean
     location: LocationType
 }
-export type UserTypeWithoutServer =  {
+export type UserTypeWithoutServer = {
     name: string,
     id: number,
     uniqueUrlName: null,
@@ -50,7 +56,10 @@ export type UserTypeWithoutServer =  {
 }
 export type UsersPageType = {
     // users: Array<UserType>
-    users:UserTypeWithoutServer[]
+    users: UserTypeWithoutServer[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 export type StateType = {
     messagesPage: MessagePageType
@@ -65,3 +74,5 @@ export type ActionType =
     | sendMessageACType
     | ChangeFollowStatusACType
     | SetUsersACType
+    | SetCurrentPageACType
+    | SetTotalUsersCountACType

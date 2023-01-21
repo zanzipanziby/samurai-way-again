@@ -1,12 +1,11 @@
-import {ActionType, UsersPageType, UserType, UserTypeWithoutServer} from "./StateAndActionTypes";
-import avatarVeronika from './../img/avatar/usersAvatar/Veronika.png'
-import avatarMisha from './../img/avatar/usersAvatar/1644932113_1-kartinkin-net-p-boss-molokosos-kartinki-1.png'
-import avatarJura from './../img/avatar/usersAvatar/Jura.png'
-import avatarSvetlana from './../img/avatar/usersAvatar/png-transparent-computer-icons-woman-avatar-woman-people-woman-user.png'
-import avatarOzzy from './../img/avatar/usersAvatar/ozzy.png'
+import {ActionType, UsersPageType, UserTypeWithoutServer} from "./StateAndActionTypes";
+
 
 const initialState: UsersPageType = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 20,
+    currentPage: 1
 }
 
 
@@ -22,14 +21,26 @@ export const UsersPageReducer = (state: UsersPageType = initialState, action: Ac
                     )
             }
         case "SET_USERS":
-            return {...state, users: [...state.users, ...action.payload.users]}
+            return {...state, users: [...action.payload.users]}
+        case "SET_CURRENT_PAGE":
+            return {...state, currentPage: action.payload.page}
+        case "SET_TOTAL_USERS_COUNT":
+            return {...state, totalUsersCount: action.payload.totalUsersCount}
         default:
             return state
 
 
     }
 }
-
+export type SetTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
+    return {
+        type: "SET_TOTAL_USERS_COUNT",
+        payload: {
+            totalUsersCount
+        }
+    } as const
+}
 export type ChangeFollowStatusACType = ReturnType<typeof changeFollowStatusAC>
 export const changeFollowStatusAC = (id: number, followStatus: boolean) => {
     return {
@@ -50,5 +61,16 @@ export const setUsersAC = (users: Array<UserTypeWithoutServer>) => {
         }
     } as const
 
+}
+
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export const setCurrentPageAC = (page: number) => {
+    return {
+        type: "SET_CURRENT_PAGE",
+        payload: {
+            page
+        }
+
+    } as const
 }
 

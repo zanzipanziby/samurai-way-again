@@ -1,94 +1,140 @@
-import React, {ReactNode, useEffect} from 'react';
-import {UserType, UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
+import React from 'react';
+import {UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
 import s from './Users.module.css'
-import avatarMisha from "../../img/avatar/usersAvatar/1644932113_1-kartinkin-net-p-boss-molokosos-kartinki-1.png";
-import avatarVeronika from "../../img/avatar/usersAvatar/Veronika.png";
+
 import avatarJura from "../../img/avatar/usersAvatar/Jura.png";
-import avatarSvetlana
-    from "../../img/avatar/usersAvatar/png-transparent-computer-icons-woman-avatar-woman-people-woman-user.png";
-import avatarOzzy from "../../img/avatar/usersAvatar/ozzy.png";
-import {v1} from "uuid";
+
 import axios from "axios";
-import {findAllByDisplayValue} from "@testing-library/react";
+import {log} from "util";
 
 
-type UsersPropsType = {
+export type UsersPropsType = {
     users: Array<UserTypeWithoutServer>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+
     setUsers: (users: Array<UserTypeWithoutServer>) => void
     changeFollowStatus: (id: number, followStatus: boolean) => void
+    setCurrenPage: (page: number) => void
+    setTotalUsersCount: (totalUsersCount: number) => void
 }
+
+// props.setUsers([
+//     {
+//         id: v1(),
+//         avatar: avatarMisha,
+//         fullName: "Misha",
+//         status: "I'm the son of a boss",
+//         followed: true,
+//         location: {
+//             city: "Vileyka",
+//             country: "Belarus"
+//         }
+//     },
+//     {
+//         id: v1(),
+//         avatar: avatarVeronika,
+//         fullName: "Veronika", status: "I'm the wife of a boss",
+//         followed: true,
+//         location: {
+//             city: "Vileyka",
+//             country: "Belarus"
+//         }
+//     },
+//     {
+//         id: v1(),
+//         avatar: avatarJura,
+//         fullName: "Jura", status: "I'm the son of a boss",
+//         followed: true,
+//         location: {
+//             city: "Vileyka",
+//             country: "Belarus"
+//         }
+//     },
+//     {
+//         id: v1(),
+//         avatar: avatarSvetlana,
+//         fullName: "Svetlana", status: "I'm the mom of a boss",
+//         followed: true,
+//         location: {
+//             city: "Smilovichi",
+//             country: "Belarus"
+//         }
+//     },
+//     {
+//         id: v1(),
+//         avatar: avatarOzzy,
+//         fullName: "Ozzy", status: "I'm rock-man",
+//         followed: false,
+//         location: {
+//             city: "Miami",
+//             country: "USA"
+//         }
+//     },
+// ]
 
 export class UsersClassComponent extends React.Component <UsersPropsType> {
     constructor(props: UsersPropsType) {
         super(props);
-        alert('ComponentBorn')
 
     }
 
     componentDidMount() {
-        alert('componentMount')
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(res => {
-                this.props.setUsers(res.data.items)
-                // props.setUsers([
-                //     {
-                //         id: v1(),
-                //         avatar: avatarMisha,
-                //         fullName: "Misha",
-                //         status: "I'm the son of a boss",
-                //         followed: true,
-                //         location: {
-                //             city: "Vileyka",
-                //             country: "Belarus"
-                //         }
-                //     },
-                //     {
-                //         id: v1(),
-                //         avatar: avatarVeronika,
-                //         fullName: "Veronika", status: "I'm the wife of a boss",
-                //         followed: true,
-                //         location: {
-                //             city: "Vileyka",
-                //             country: "Belarus"
-                //         }
-                //     },
-                //     {
-                //         id: v1(),
-                //         avatar: avatarJura,
-                //         fullName: "Jura", status: "I'm the son of a boss",
-                //         followed: true,
-                //         location: {
-                //             city: "Vileyka",
-                //             country: "Belarus"
-                //         }
-                //     },
-                //     {
-                //         id: v1(),
-                //         avatar: avatarSvetlana,
-                //         fullName: "Svetlana", status: "I'm the mom of a boss",
-                //         followed: true,
-                //         location: {
-                //             city: "Smilovichi",
-                //             country: "Belarus"
-                //         }
-                //     },
-                //     {
-                //         id: v1(),
-                //         avatar: avatarOzzy,
-                //         fullName: "Ozzy", status: "I'm rock-man",
-                //         followed: false,
-                //         location: {
-                //             city: "Miami",
-                //             country: "USA"
-                //         }
-                //     },
-                // ]
+                this.props.setUsers(res.data.items);
+                this.props.setTotalUsersCount(res.data.totalCount);
             })
     }
 
+    setCurrenPageHandler = (page: number) => {
+        this.props.setCurrenPage(page)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+            .then(res => {
+                this.props.setUsers(res.data.items)
 
+            })
+    }
     render() {
-        let usersRender = this.props.users
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+        let pages = [];
+        for (let i = 1; i <= pagesCount; i += 1) {
+            pages.push(i);
+        }
+
+        let slicedPages;
+        let curPage = this.props.currentPage;
+        if (curPage - 3 < 0) {
+            slicedPages = pages.slice(0, 5);
+        } else {
+            slicedPages = pages.slice(curPage - 3, curPage + 2);
+        }
+
+
+
+
+
+        // const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        // console.log(this.props.totalUsersCount)
+        // const pages = []
+        // for (let i = 1; i <= 15; i++) {
+        //     pages.push(i)
+        // }
+
+        const pagesRender = slicedPages.map(p => {
+            return (
+                <li
+                    key={p}
+                    className={this.props.currentPage === p ? s.selectedPage : s.page}
+                    onClick={() => this.setCurrenPageHandler(p)}
+                >
+                    {p}
+                </li>
+            )
+        })
+
+        const usersRender = this.props.users
             .map(u => {
                 return (
                     // <li key={u.id} className={s.user}>
@@ -147,6 +193,9 @@ export class UsersClassComponent extends React.Component <UsersPropsType> {
         return (
             <div>
                 <h3 className={s.title}>Users</h3>
+                <ul className={s.paginationList}>
+                    {pagesRender}
+                </ul>
                 <ul>
                     {usersRender}
                 </ul>
