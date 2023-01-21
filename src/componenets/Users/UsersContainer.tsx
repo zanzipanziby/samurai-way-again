@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Users} from "./Users";
 import {ActionType, StateType, UserType, UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
 import {changeFollowStatusAC, setUsersAC} from "../../Redux/usersPageReducer";
+import {UsersClassComponent} from "./UsersClassComponent";
 
 
 const mapStateToProps = (state: StateType) => {
@@ -21,5 +22,5 @@ const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClassComponent)
 
