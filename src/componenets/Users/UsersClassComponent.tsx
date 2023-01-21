@@ -21,67 +21,69 @@ type UsersPropsType = {
 export class UsersClassComponent extends React.Component <UsersPropsType> {
     constructor(props: UsersPropsType) {
         super(props);
-        alert('componentBorn')
+        alert('ComponentBorn')
 
-        if (this.props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(res => {
-                    this.props.setUsers(res.data.items)
-                    // props.setUsers([
-                    //     {
-                    //         id: v1(),
-                    //         avatar: avatarMisha,
-                    //         fullName: "Misha",
-                    //         status: "I'm the son of a boss",
-                    //         followed: true,
-                    //         location: {
-                    //             city: "Vileyka",
-                    //             country: "Belarus"
-                    //         }
-                    //     },
-                    //     {
-                    //         id: v1(),
-                    //         avatar: avatarVeronika,
-                    //         fullName: "Veronika", status: "I'm the wife of a boss",
-                    //         followed: true,
-                    //         location: {
-                    //             city: "Vileyka",
-                    //             country: "Belarus"
-                    //         }
-                    //     },
-                    //     {
-                    //         id: v1(),
-                    //         avatar: avatarJura,
-                    //         fullName: "Jura", status: "I'm the son of a boss",
-                    //         followed: true,
-                    //         location: {
-                    //             city: "Vileyka",
-                    //             country: "Belarus"
-                    //         }
-                    //     },
-                    //     {
-                    //         id: v1(),
-                    //         avatar: avatarSvetlana,
-                    //         fullName: "Svetlana", status: "I'm the mom of a boss",
-                    //         followed: true,
-                    //         location: {
-                    //             city: "Smilovichi",
-                    //             country: "Belarus"
-                    //         }
-                    //     },
-                    //     {
-                    //         id: v1(),
-                    //         avatar: avatarOzzy,
-                    //         fullName: "Ozzy", status: "I'm rock-man",
-                    //         followed: false,
-                    //         location: {
-                    //             city: "Miami",
-                    //             country: "USA"
-                    //         }
-                    //     },
-                    // ]
-                })
-        }
+    }
+
+    componentDidMount() {
+        alert('componentMount')
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(res => {
+                this.props.setUsers(res.data.items)
+                // props.setUsers([
+                //     {
+                //         id: v1(),
+                //         avatar: avatarMisha,
+                //         fullName: "Misha",
+                //         status: "I'm the son of a boss",
+                //         followed: true,
+                //         location: {
+                //             city: "Vileyka",
+                //             country: "Belarus"
+                //         }
+                //     },
+                //     {
+                //         id: v1(),
+                //         avatar: avatarVeronika,
+                //         fullName: "Veronika", status: "I'm the wife of a boss",
+                //         followed: true,
+                //         location: {
+                //             city: "Vileyka",
+                //             country: "Belarus"
+                //         }
+                //     },
+                //     {
+                //         id: v1(),
+                //         avatar: avatarJura,
+                //         fullName: "Jura", status: "I'm the son of a boss",
+                //         followed: true,
+                //         location: {
+                //             city: "Vileyka",
+                //             country: "Belarus"
+                //         }
+                //     },
+                //     {
+                //         id: v1(),
+                //         avatar: avatarSvetlana,
+                //         fullName: "Svetlana", status: "I'm the mom of a boss",
+                //         followed: true,
+                //         location: {
+                //             city: "Smilovichi",
+                //             country: "Belarus"
+                //         }
+                //     },
+                //     {
+                //         id: v1(),
+                //         avatar: avatarOzzy,
+                //         fullName: "Ozzy", status: "I'm rock-man",
+                //         followed: false,
+                //         location: {
+                //             city: "Miami",
+                //             country: "USA"
+                //         }
+                //     },
+                // ]
+            })
     }
 
 
