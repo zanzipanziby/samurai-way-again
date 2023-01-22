@@ -10,7 +10,7 @@ import {Settings} from "./componenets/Settings/Settings";
 
 import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
 import {Users} from "./componenets/Users/Users";
-import {UsersContainer} from "./componenets/Users/UsersContainer";
+import {UsersAPIComponent, UsersContainer} from "./componenets/Users/UsersContainer";
 
 type AppPropsType = {}
 
