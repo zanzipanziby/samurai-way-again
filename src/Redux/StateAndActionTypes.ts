@@ -5,7 +5,7 @@ import {
     SetCurrentPageACType,
     setTotalUsersCountAC,
     SetTotalUsersCountACType,
-    SetUsersACType
+    SetUsersACType, ToggleIsFetchingACType
 } from "./usersPageReducer";
 
 export type DialogsDataType = {
@@ -60,6 +60,7 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 export type StateType = {
     messagesPage: MessagePageType
@@ -76,3 +77,4 @@ export type ActionType =
     | SetUsersACType
     | SetCurrentPageACType
     | SetTotalUsersCountACType
+    | ToggleIsFetchingACType
