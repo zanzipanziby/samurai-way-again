@@ -1,4 +1,4 @@
-import {addPostACType, changeNewPostTextInStateACType} from "./profilePageReducer";
+import {addPostACType, changeNewPostTextInStateACType, SetUserProfileACType} from "./profilePageReducer";
 import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePageReducer";
 import {
     ChangeFollowStatusACType,
@@ -8,6 +8,59 @@ import {
     SetUsersACType, ToggleIsFetchingACType
 } from "./usersPageReducer";
 
+
+// ------------   StateType   ---------------\\
+export type StateType = {
+    messagesPage: MessagePageType
+    profilePage: ProfilePageType
+    usersPage: UsersPageType
+}
+
+
+// ------------   ProfilePageType   -----------------\\
+export type ProfilePageType = {
+    profile: ProfileType
+    posts: Array<PostsDataType>
+    newPostText: string
+}
+export type ProfileType = {
+    aboutMe: string
+    contacts: ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: PhotosType
+}
+
+export type ContactsType = {
+    facebook: string | null
+    website: string | null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null
+    github: string | null
+    mainLink: string | null
+}
+export type PhotosType = {
+    small: string
+    large: string
+}
+
+export type PostsDataType = {
+    id: string
+    message: string
+    likesCount: number
+}
+
+
+//----------------   MessagePageType   -----------------------\\
+export type MessagePageType = {
+    dialogs: Array<DialogsDataType>
+    messages: Array<MessagesDataType>
+    newMessageText: string
+}
 export type DialogsDataType = {
     id: string
     name: string
@@ -16,25 +69,9 @@ export type MessagesDataType = {
     id: string
     message: string
 }
-export type PostsDataType = {
-    id: string
-    message: string
-    likesCount: number
 
-}
-export type MessagePageType = {
-    dialogs: Array<DialogsDataType>
-    messages: Array<MessagesDataType>
-    newMessageText: string
-}
-export type ProfilePageType = {
-    posts: Array<PostsDataType>
-    newPostText: string
-}
-export type LocationType = {
-    city: string
-    country: string
-}
+
+// ------------ UserType for UserPageType (LEGACY) -----------\\
 export type UserType = {
     id: string
     avatar: string
@@ -42,6 +79,21 @@ export type UserType = {
     status: string
     followed: boolean
     location: LocationType
+}
+export type LocationType = {
+    city: string
+    country: string
+}
+
+
+// ------------  UserPageType --------------\\
+export type UsersPageType = {
+    // users: Array<UserType>
+    users: Array<UserTypeWithoutServer>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isFetching: boolean
 }
 export type UserTypeWithoutServer = {
     name: string,
@@ -54,19 +106,9 @@ export type UserTypeWithoutServer = {
     "status": null,
     "followed": boolean
 }
-export type UsersPageType = {
-    // users: Array<UserType>
-    users: UserTypeWithoutServer[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-}
-export type StateType = {
-    messagesPage: MessagePageType
-    profilePage: ProfilePageType
-    usersPage: UsersPageType
-}
+
+
+// ---------------   ActionType   -----------\\
 
 export type ActionType =
     | addPostACType
@@ -78,3 +120,4 @@ export type ActionType =
     | SetCurrentPageACType
     | SetTotalUsersCountACType
     | ToggleIsFetchingACType
+    | SetUserProfileACType

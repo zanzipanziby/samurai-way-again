@@ -1,8 +1,50 @@
-import {ActionType, PostsDataType, ProfilePageType} from "./StateAndActionTypes";
+import {ActionType, PostsDataType, ProfilePageType, ProfileType} from "./StateAndActionTypes";
 import {v1} from "uuid";
-
+import avatar from '../img/avatar/avatar.png'
+let x = {
+        aboutMe: "Genius, billionaire, playboy, philanthropist",
+        contacts: {
+            facebook: "facebook.com",
+            website: null,
+            vk: "vk.com",
+            twitter: "https://twitter.com",
+            instagram: "instagram.com",
+            youtube: null,
+            github: "github.com",
+            mainLink: null
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: "I'm Iron Man",
+        fullName: 'Edward "Tony" Stark',
+        userId: 2,
+        photos: {
+            small: avatar,
+            large: avatar
+        }
+    }
 
 let initialProfilePageState: ProfilePageType =  {
+    profile:{
+        aboutMe: "Genius, billionaire, playboy, philanthropist",
+        contacts: {
+            facebook: "facebook.com",
+            website: null,
+            vk: "vk.com",
+            twitter: "https://twitter.com",
+            instagram: "instagram.com",
+            youtube: null,
+            github: "github.com",
+            mainLink: null
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: "I'm Iron Man",
+        fullName: 'Edward "Tony" Stark',
+        userId: 2,
+        photos: {
+            small: avatar,
+            large: avatar
+        }
+    },
     posts: [
         {id: v1(), message: "Hello World", likesCount: 13},
         {id: v1(), message: "It's my first application", likesCount: 34},
@@ -11,6 +53,8 @@ let initialProfilePageState: ProfilePageType =  {
 }
 export const profilePageReducer = (state: ProfilePageType = initialProfilePageState, action: ActionType) => {
     switch (action.type) {
+        case "SET_USER_PROFILE":
+            return {...state, profile: action.payload.profile}
         case "ADD_POST":
             const newPost: PostsDataType = {
                 id: v1(),
@@ -48,3 +92,13 @@ export const changeNewPostTextInStateAC = (text: string) => {
         }
     } as const
 }
+
+export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
+export const setUserProfileAC = (profile: any) => (
+    {
+        type: "SET_USER_PROFILE",
+        payload: {
+            profile
+        }
+    }as const
+)

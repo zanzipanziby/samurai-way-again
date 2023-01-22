@@ -2,7 +2,7 @@
 
 import {profilePageReducer} from "./profilePageReducer";
 import {messagePageReducer} from "./messagePageReducer";
-import {ActionType, StateType} from "./StateAndActionTypes";
+import {ActionType, ProfileType, StateType} from "./StateAndActionTypes";
 
 
 export type StoreType = {
@@ -22,6 +22,7 @@ export type StoreType = {
 export const store: StoreType = {
     _state: {
         profilePage: {
+            profile: {} as ProfileType,
             posts: [
                 {id: "1", message: "Hello World", likesCount: 13},
                 {id: "2", message: "It's my first application", likesCount: 34},

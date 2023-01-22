@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./Users.module.css";
 import avatarJura from "../../img/avatar/usersAvatar/Jura.png";
 import {UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
+import {NavLink} from "react-router-dom";
 
 
 type UsersPresentationComponentPropsType = {
@@ -81,7 +82,9 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
                 <li key={u.id} className={s.user}>
                     <div className={s.avatarAndButtonContainer}>
                         <div className={s.avatarContainer}>
-                            <img src={u.photos.small ? u.photos.small : avatarJura} alt={u.name}/>
+                            <NavLink to={`profile/${u.id}`}>
+                                <img src={u.photos.small ? u.photos.small : avatarJura} alt={u.name}/>
+                            </NavLink>
                         </div>
                         <div>
                             <button

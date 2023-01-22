@@ -7,10 +7,9 @@ import {Route} from "react-router-dom";
 import {News} from "./componenets/News/News";
 import {Music} from "./componenets/Music/Music";
 import {Settings} from "./componenets/Settings/Settings";
-
 import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
-import {Users} from "./componenets/Users/Users";
-import {UsersAPIComponent, UsersContainer} from "./componenets/Users/UsersContainer";
+import {UsersContainer} from "./componenets/Users/UsersContainer";
+import {ProfileContainer} from "./componenets/Profile/ProfileContainer";
 
 type AppPropsType = {}
 
@@ -23,7 +22,7 @@ function App(props: AppPropsType) {
                 <Header/>
                 <NavBar/>
                 <div className={"wrapper-content"}>
-                    <Route render={() => <Profile/>} path={'/profile'}/>
+                    <Route render={() => <ProfileContainer/>} path={'/profile'}/>
                     <Route render={() => <DialogsContainer/>} path={'/dialogs'}/>
                     <Route render={() => <News/>} path={'/news'}/>
                     <Route render={() => <Music/>} path={'/music'}/>
