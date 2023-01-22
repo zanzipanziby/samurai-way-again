@@ -160,25 +160,31 @@ type MapDispatchToPropsType = {
     toggleIsFetching: (value: boolean) => void
 
 }
-const mapDispatchToProps = (dispatch: (action: ActionType) => void): MapDispatchToPropsType => {
-    return {
-        setUsers: (users: UserTypeWithoutServer[]) => {
-            dispatch(setUsersAC(users))
-        },
-        changeFollowStatus: (id: number, followStatus: boolean) => {
-            dispatch(changeFollowStatusAC(id, followStatus))
-        },
-        setCurrenPage: (page: number) => {
-            dispatch(setCurrentPageAC(page))
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setTotalUsersCountAC(totalUsersCount))
-        },
-        toggleIsFetching: (value: boolean) => {
-            dispatch(toggleIsFetchingAC(value))
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch: (action: ActionType) => void): MapDispatchToPropsType => {
+//     return {
+//         setUsers: (users: UserTypeWithoutServer[]) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         changeFollowStatus: (id: number, followStatus: boolean) => {
+//             dispatch(changeFollowStatusAC(id, followStatus))
+//         },
+//         setCurrenPage: (page: number) => {
+//             dispatch(setCurrentPageAC(page))
+//         },
+//         setTotalUsersCount: (totalUsersCount: number) => {
+//             dispatch(setTotalUsersCountAC(totalUsersCount))
+//         },
+//         toggleIsFetching: (value: boolean) => {
+//             dispatch(toggleIsFetchingAC(value))
+//         }
+//     }
+// }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+export const UsersContainer = connect(mapStateToProps, {
+    setUsers: setUsersAC,
+    changeFollowStatus: changeFollowStatusAC,
+    setCurrenPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    toggleIsFetching: toggleIsFetchingAC,
+})(UsersAPIComponent)
 
