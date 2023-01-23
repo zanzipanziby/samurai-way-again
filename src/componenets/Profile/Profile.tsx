@@ -7,7 +7,7 @@ import {ProfileType} from "../../Redux/StateAndActionTypes";
 
 
 type ProfilePropsType = {
-    profile: ProfileType
+    profile: ProfileType |  null
 }
 
 

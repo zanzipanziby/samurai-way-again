@@ -19,7 +19,7 @@ export type StateType = {
 
 // ------------   ProfilePageType   -----------------\\
 export type ProfilePageType = {
-    profile: ProfileType
+    profile: ProfileType | null
     posts: Array<PostsDataType>
     newPostText: string
 }

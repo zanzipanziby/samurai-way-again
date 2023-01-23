@@ -22,7 +22,7 @@ function App(props: AppPropsType) {
                 <Header/>
                 <NavBar/>
                 <div className={"wrapper-content"}>
-                    <Route render={() => <ProfileContainer/>} path={'/profile'}/>
+                    <Route render={() => <ProfileContainer/>} path={'/profile/:userId?'}/>
                     <Route render={() => <DialogsContainer/>} path={'/dialogs'}/>
                     <Route render={() => <News/>} path={'/news'}/>
                     <Route render={() => <Music/>} path={'/music'}/>
