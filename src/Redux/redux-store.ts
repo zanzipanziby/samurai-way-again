@@ -2,12 +2,13 @@ import {combineReducers, createStore} from "redux";
 import {profilePageReducer} from "./profilePageReducer";
 import {messagePageReducer} from "./messagePageReducer";
 import {UsersPageReducer} from "./usersPageReducer";
-import {StateType} from "./StateAndActionTypes";
+import {authReducer} from "./authReducer";
 
 let reducers = combineReducers({
     profilePage: profilePageReducer,
     messagesPage:messagePageReducer,
-    usersPage: UsersPageReducer
+    usersPage: UsersPageReducer,
+    auth: authReducer
 });
 
 

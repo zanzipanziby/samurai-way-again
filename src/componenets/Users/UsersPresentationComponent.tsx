@@ -53,6 +53,7 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
     const usersRender = props.users
 
         .map(u => {
+            console.log(u)
             return (
                 // <li key={u.id} className={s.user}>
                 //     <div className={s.avatarAndButtonContainer}>

@@ -10,6 +10,7 @@ import {Settings} from "./componenets/Settings/Settings";
 import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
 import {UsersContainer} from "./componenets/Users/UsersContainer";
 import {ProfileContainer} from "./componenets/Profile/ProfileContainer";
+import HeaderContainerComponent from "./componenets/Header/HeaderContainerComponent";
 
 type AppPropsType = {}
 
@@ -19,7 +20,7 @@ function App(props: AppPropsType) {
 
         <div className={"wrapper"}>
             <div className="App">
-                <Header/>
+                <HeaderContainerComponent/>
                 <NavBar/>
                 <div className={"wrapper-content"}>
                     <Route render={() => <ProfileContainer/>} path={'/profile/:userId?'}/>

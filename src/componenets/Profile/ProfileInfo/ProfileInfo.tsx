@@ -2,7 +2,7 @@ import s from "./ProfileInfo.module.css";
 import banner from "../../../img/banner/banner.png";
 import React from "react";
 import {ProfileType} from "../../../Redux/StateAndActionTypes";
-import {Loader} from "../../Loader/Loader";
+
 
 
 type ProfileInfoType = {

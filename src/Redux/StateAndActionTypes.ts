@@ -7,6 +7,8 @@ import {
     SetTotalUsersCountACType,
     SetUsersACType, ToggleIsFetchingACType
 } from "./usersPageReducer";
+import {store} from "./redux-store";
+import {SetUserDataACType} from "./authReducer";
 
 
 // ------------   StateType   ---------------\\
@@ -14,6 +16,7 @@ export type StateType = {
     messagesPage: MessagePageType
     profilePage: ProfilePageType
     usersPage: UsersPageType
+    auth: AuthType
 }
 
 
@@ -108,6 +111,15 @@ export type UserTypeWithoutServer = {
 }
 
 
+//-----------  AuthType ----------------\\
+
+export type AuthType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+
 // ---------------   ActionType   -----------\\
 
 export type ActionType =
@@ -121,3 +133,4 @@ export type ActionType =
     | SetTotalUsersCountACType
     | ToggleIsFetchingACType
     | SetUserProfileACType
+    | SetUserDataACType

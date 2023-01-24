@@ -2,7 +2,7 @@
 
 import {profilePageReducer} from "./profilePageReducer";
 import {messagePageReducer} from "./messagePageReducer";
-import {ActionType, ProfileType, StateType} from "./StateAndActionTypes";
+import {ActionType, AuthType, ProfileType, StateType} from "./StateAndActionTypes";
 
 
 export type StoreType = {
@@ -52,7 +52,8 @@ export const store: StoreType = {
             totalUsersCount: 0,
             currentPage: 1,
             isFetching: true
-        }
+        },
+        auth:{} as AuthType
 
 
     },
