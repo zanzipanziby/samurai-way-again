@@ -3,7 +3,9 @@ import s from "./Users.module.css";
 import avatarJura from "../../img/avatar/usersAvatar/Jura.png";
 import {UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followingAPI} from "../../api/api";
+
+
 
 
 type UsersPresentationComponentPropsType = {
@@ -56,31 +58,6 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
 
         .map(u => {
             return (
-                // <li key={u.id} className={s.user}>
-                //     <div className={s.avatarAndButtonContainer}>
-                //         <div className={s.avatarContainer}>
-                //             <img src= {u.avatar} alt={u.fullName}/>
-                //         </div>
-                //         <div>
-                //             <button
-                //                 className={s.followButton}
-                //                 onClick={()=>props.changeFollowStatus(u.id, !u.followed)}
-                //             >
-                //                 {u.followed ? 'Unfollow' : 'Follow'}
-                //             </button>
-                //         </div>
-                //     </div>
-                //     <div className={s.infoContainer}>
-                //         <div className={s.nameAndStatusContainer}>
-                //             <div className={s.name}>{u.fullName}</div>
-                //             <div className={s.status}>{u.status}</div>
-                //         </div>
-                //         <div className={s.locationContainer}>
-                //                 <div>{u.location.country}</div>
-                //                 <div>{u.location.city}</div>
-                //         </div>
-                //     </div>
-                // </li>
                 <li key={u.id} className={s.user}>
                     <div className={s.avatarAndButtonContainer}>
                         <div className={s.avatarContainer}>
@@ -92,35 +69,21 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
                             {!u.followed
                                 ? <button
                                     className={s.followButton}
-                                    onClick={
-                                        () => {
-                                            axios.post(
-                                                `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                                                null,
-                                                {
-                                                    withCredentials: true,
-                                                    headers: {
-                                                        "API-KEY": "00d10ed1-05f4-4d22-abb0-efc43f6a26ee"
-                                                    }
-                                                })
-                                                .then(res => res.data.resultCode === 0 && props.followOnUser(u.id))
-                                        }
-                                    }
-                                >Follow</button>
-                                : <button className={s.followButton}
-                                          onClick={
-                                              () => {
-                                                  axios.delete(
-                                                      `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                                                      {
-                                                          withCredentials: true,
-                                                          headers: {
-                                                              "API-KEY": "00d10ed1-05f4-4d22-abb0-efc43f6a26ee"
-                                                          }
-                                                      })
-                                                      .then(res => res.data.resultCode === 0 && props.unfollowOnUser(u.id))
-                                              }
-                                          }>Unfollow</button>
+                                    onClick={() => {
+                                        followingAPI.follow(u.id)
+                                            .then(data => data.resultCode === 0 && props.followOnUser(u.id) && console.log(data))
+                                    }}>
+                                    Follow
+                                </button>
+
+                                : <button
+                                    className={s.followButton}
+                                    onClick={() => {
+                                        followingAPI.unfollow(u.id)
+                                            .then(data => data.resultCode === 0 && props.unfollowOnUser(u.id) && console.log(data))
+                                    }}>
+                                    Unfollow
+                                </button>
                             }
 
                         </div>

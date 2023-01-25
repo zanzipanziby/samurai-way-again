@@ -1,8 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import loader from '../../img/loader/loader.svg'
-
-import {ActionType, StateType, UserTypeWithoutServer} from '../../Redux/StateAndActionTypes';
+import {StateType, UserTypeWithoutServer} from '../../Redux/StateAndActionTypes';
 import {
     followOnUserAC,
     setCurrentPageAC,
@@ -10,10 +8,9 @@ import {
     setUsersAC,
     toggleIsFetchingAC, unfollowOnUserAC
 } from '../../Redux/usersPageReducer';
-
-import axios from 'axios';
 import {UsersPresentationComponent} from './UsersPresentationComponent';
 import {Loader} from "../Loader/Loader";
+import {usersAPI} from "../../api/api";
 
 export type UsersPropsType = {
     users: Array<UserTypeWithoutServer>
@@ -30,59 +27,6 @@ export type UsersPropsType = {
     toggleIsFetching: (value: boolean) => void
 }
 
-// props.setUsers([
-//     {
-//         id: v1(),
-//         avatar: avatarMisha,
-//         fullName: "Misha",
-//         status: "I'm the son of a boss",
-//         followed: true,
-//         location: {
-//             city: "Vileyka",
-//             country: "Belarus"
-//         }
-//     },
-//     {
-//         id: v1(),
-//         avatar: avatarVeronika,
-//         fullName: "Veronika", status: "I'm the wife of a boss",
-//         followed: true,
-//         location: {
-//             city: "Vileyka",
-//             country: "Belarus"
-//         }
-//     },
-//     {
-//         id: v1(),
-//         avatar: avatarJura,
-//         fullName: "Jura", status: "I'm the son of a boss",
-//         followed: true,
-//         location: {
-//             city: "Vileyka",
-//             country: "Belarus"
-//         }
-//     },
-//     {
-//         id: v1(),
-//         avatar: avatarSvetlana,
-//         fullName: "Svetlana", status: "I'm the mom of a boss",
-//         followed: true,
-//         location: {
-//             city: "Smilovichi",
-//             country: "Belarus"
-//         }
-//     },
-//     {
-//         id: v1(),
-//         avatar: avatarOzzy,
-//         fullName: "Ozzy", status: "I'm rock-man",
-//         followed: false,
-//         location: {
-//             city: "Miami",
-//             country: "USA"
-//         }
-//     },
-// ]
 
 export class UsersAPIComponent extends React.Component <UsersPropsType> {
     constructor(props: UsersPropsType) {
@@ -92,16 +36,11 @@ export class UsersAPIComponent extends React.Component <UsersPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(
-            `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-        {
-            withCredentials: true
-        }
-        )
-            .then(res => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(res.data.items);
-                this.props.setTotalUsersCount(res.data.totalCount);
+                this.props.setUsers(data.items);
+                this.props.setTotalUsersCount(data.totalCount);
             })
     }
 
@@ -109,12 +48,10 @@ export class UsersAPIComponent extends React.Component <UsersPropsType> {
 
         this.props.setCurrenPage(page)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-            {withCredentials: true}
-            )
-            .then(res => {
+        usersAPI.getUsers(page, this.props.pageSize)
+            .then(data => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(res.data.items)
+                this.props.setUsers(data.items)
 
             })
     }
@@ -122,7 +59,7 @@ export class UsersAPIComponent extends React.Component <UsersPropsType> {
     render() {
         return (
             <>
-                {this.props.isFetching === true
+                {this.props.isFetching
                     ? <Loader/>
                     :
                     <UsersPresentationComponent
