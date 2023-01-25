@@ -13,8 +13,8 @@ export const Header = (props: HeaderPropsType) => {
             <div><img src={logo} alt="logo" className={s.logo}/></div>
             <div className={s.loginBlock}>
                 {props.isAuth
-                    ? <div>{props.login}</div>
-                    : <NavLink to={'/login'}>Login</NavLink>}
+                    ? <div className={s.userLogin}>{props.login}</div>
+                    : <NavLink to={'/login'} className={s.login}>Login</NavLink>}
             </div>
         </header>
     );

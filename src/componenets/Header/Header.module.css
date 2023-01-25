@@ -10,3 +10,15 @@
 .logo {
     width: 60px;
 }
+
+.userLogin {
+    color: aliceblue;
+}
+
+.login {
+    color: aliceblue;
+}
+
+.login:hover {
+    text-decoration: underline;
+}

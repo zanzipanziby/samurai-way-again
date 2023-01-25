@@ -1,11 +1,11 @@
 import {addPostACType, changeNewPostTextInStateACType, SetUserProfileACType} from "./profilePageReducer";
 import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePageReducer";
 import {
-    ChangeFollowStatusACType,
+    FollowOnUserACType,
     SetCurrentPageACType,
     setTotalUsersCountAC,
     SetTotalUsersCountACType,
-    SetUsersACType, ToggleIsFetchingACType
+    SetUsersACType, ToggleIsFetchingACType, UnfollowOnUserACType
 } from "./usersPageReducer";
 import {store} from "./redux-store";
 import {SetUserDataACType} from "./authReducer";
@@ -127,7 +127,8 @@ export type ActionType =
     | changeNewPostTextInStateACType
     | changeNewMessageTextInStateACType
     | sendMessageACType
-    | ChangeFollowStatusACType
+    | FollowOnUserACType
+    | UnfollowOnUserACType
     | SetUsersACType
     | SetCurrentPageACType
     | SetTotalUsersCountACType

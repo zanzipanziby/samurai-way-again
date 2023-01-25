@@ -12,12 +12,21 @@ const initialState: UsersPageType = {
 
 export const UsersPageReducer = (state: UsersPageType = initialState, action: ActionType) => {
     switch (action.type) {
-        case "CHANGE_FOLLOW_STATUS":
+        case "FOLLOW_ON_USER":
             return {
                 ...state, users: state.users
                     .map(
                         u => u.id === action.payload.id
-                            ? {...u, followed: action.payload.followStatus}
+                            ? {...u, followed: true}
+                            : u
+                    )
+            }
+        case "UNFOLLOW_ON_USER":
+            return {
+                ...state, users: state.users
+                    .map(
+                        u => u.id === action.payload.id
+                            ? {...u, followed: false}
                             : u
                     )
             }
@@ -44,13 +53,21 @@ export const setTotalUsersCountAC = (totalUsersCount: number) => {
         }
     } as const
 }
-export type ChangeFollowStatusACType = ReturnType<typeof changeFollowStatusAC>
-export const changeFollowStatusAC = (id: number, followStatus: boolean) => {
+export type FollowOnUserACType = ReturnType<typeof followOnUserAC>
+export const followOnUserAC = (id: number) => {
     return {
-        type: "CHANGE_FOLLOW_STATUS",
+        type: "FOLLOW_ON_USER",
         payload: {
             id,
-            followStatus
+        }
+    } as const
+}
+export type UnfollowOnUserACType = ReturnType<typeof unfollowOnUserAC>
+export const unfollowOnUserAC = (id: number) => {
+    return {
+        type: "UNFOLLOW_ON_USER",
+        payload: {
+            id
         }
     } as const
 }
