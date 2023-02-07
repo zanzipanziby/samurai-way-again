@@ -51,7 +51,8 @@ export const store: StoreType = {
             pageSize: 0,
             totalUsersCount: 0,
             currentPage: 1,
-            isFetching: true
+            isFetching: true,
+            followingInProgress: []
         },
         auth:{} as AuthType
 

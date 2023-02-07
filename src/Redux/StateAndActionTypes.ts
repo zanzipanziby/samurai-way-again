@@ -3,9 +3,11 @@ import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePag
 import {
     FollowOnUserACType,
     SetCurrentPageACType,
-    setTotalUsersCountAC,
     SetTotalUsersCountACType,
-    SetUsersACType, ToggleIsFetchingACType, UnfollowOnUserACType
+    SetUsersACType,
+    ToggleFollowingInProgressACType,
+    ToggleIsFetchingACType,
+    UnfollowOnUserACType
 } from "./usersPageReducer";
 import {store} from "./redux-store";
 import {SetUserDataACType} from "./authReducer";
@@ -96,7 +98,8 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: number[]
 }
 export type UserTypeWithoutServer = {
     name: string,
@@ -135,3 +138,4 @@ export type ActionType =
     | ToggleIsFetchingACType
     | SetUserProfileACType
     | SetUserDataACType
+    | ToggleFollowingInProgressACType

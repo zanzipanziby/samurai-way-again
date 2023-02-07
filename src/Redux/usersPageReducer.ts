@@ -6,7 +6,8 @@ const initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    followingInProgress: []
 }
 
 
@@ -38,6 +39,13 @@ export const UsersPageReducer = (state: UsersPageType = initialState, action: Ac
             return {...state, totalUsersCount: action.payload.totalUsersCount}
         case "TOGGLE_IS_FETCHING":
             return {...state, isFetching: action.payload.value}
+        case "TOGGLE_IS_FOLLOWING_PROGRESS":
+            return {
+                ...state,
+                followingInProgress: action.payload.value
+                    ? [...state.followingInProgress, action.payload.userId]
+                    :state.followingInProgress.filter(id=> id !== action.payload.userId)
+            }
         default:
             return state
 
@@ -100,6 +108,17 @@ export const toggleIsFetchingAC = (value: boolean)=> {
         type: "TOGGLE_IS_FETCHING",
         payload: {
             value
+        }
+    }as const
+}
+
+export type ToggleFollowingInProgressACType = ReturnType<typeof toggleFollowingInProgressAC>
+export const toggleFollowingInProgressAC = (value: boolean, userId: number) => {
+    return {
+        type: "TOGGLE_IS_FOLLOWING_PROGRESS",
+        payload: {
+            value,
+            userId
         }
     }as const
 }

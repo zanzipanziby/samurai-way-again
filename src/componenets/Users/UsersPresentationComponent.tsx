@@ -6,16 +6,16 @@ import {NavLink} from "react-router-dom";
 import {followingAPI} from "../../api/api";
 
 
-
-
 type UsersPresentationComponentPropsType = {
     users: Array<UserTypeWithoutServer>
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    followingInProgress: number[]
     setCurrenPageHandler: (page: number) => void
     followOnUser: (id: number) => void
     unfollowOnUser: (id: number) => void
+    toggleFollowingInProgress: (value: boolean, userId: number) => void
 }
 
 export const UsersPresentationComponent = (props: UsersPresentationComponentPropsType) => {
@@ -69,18 +69,24 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
                             {!u.followed
                                 ? <button
                                     className={s.followButton}
+                                    disabled={props.followingInProgress.some(id => id === u.id)}
                                     onClick={() => {
+                                        props.toggleFollowingInProgress(true, u.id)
                                         followingAPI.follow(u.id)
                                             .then(data => data.resultCode === 0 && props.followOnUser(u.id) && console.log(data))
+                                            .finally(() => props.toggleFollowingInProgress(false, u.id))
                                     }}>
                                     Follow
                                 </button>
 
                                 : <button
                                     className={s.followButton}
+                                    disabled={props.followingInProgress.some(id => id === u.id)}
                                     onClick={() => {
+                                        props.toggleFollowingInProgress(true, u.id)
                                         followingAPI.unfollow(u.id)
                                             .then(data => data.resultCode === 0 && props.unfollowOnUser(u.id) && console.log(data))
+                                            .finally(() => props.toggleFollowingInProgress(false, u.id))
                                     }}>
                                     Unfollow
                                 </button>
