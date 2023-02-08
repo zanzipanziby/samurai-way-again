@@ -3,12 +3,8 @@ import {changeNewMessageTextInStateAC, sendMessageAC} from "../../Redux/messageP
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionType, StateType} from "../../Redux/StateAndActionTypes";
-
-
-
-
-
-
+import {withAuthRedirect} from "../../Hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 
 let mapStateToProps = (state: StateType) => {
@@ -30,5 +26,8 @@ let mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     }
 }
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsContainer = compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs)
 

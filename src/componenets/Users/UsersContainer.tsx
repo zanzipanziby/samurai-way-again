@@ -13,6 +13,7 @@ import {
 import {UsersPresentationComponent} from './UsersPresentationComponent';
 import {Loader} from "../Loader/Loader";
 import {withAuthRedirect} from "../../Hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 
 export type UsersAPIComponentPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -106,5 +107,8 @@ const MapDispatchToProps: MapDispatchToPropsType = {
 }
 
 
-export const UsersContainer = withAuthRedirect(connect(mapStateToProps, MapDispatchToProps)(UsersAPIComponent))
+export const UsersContainer = compose<React.ComponentType>(
+    connect(mapStateToProps, MapDispatchToProps),
+    withAuthRedirect
+)(UsersAPIComponent)
 
