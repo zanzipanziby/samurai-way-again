@@ -12,6 +12,7 @@ import {
 } from '../../Redux/usersPageReducer';
 import {UsersPresentationComponent} from './UsersPresentationComponent';
 import {Loader} from "../Loader/Loader";
+import {withAuthRedirect} from "../../Hoc/WithAuthRedirect";
 
 
 export type UsersAPIComponentPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -105,5 +106,5 @@ const MapDispatchToProps: MapDispatchToPropsType = {
 }
 
 
-export const UsersContainer = connect(mapStateToProps, MapDispatchToProps)(UsersAPIComponent)
+export const UsersContainer = withAuthRedirect(connect(mapStateToProps, MapDispatchToProps)(UsersAPIComponent))
 

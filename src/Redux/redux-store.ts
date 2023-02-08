@@ -6,7 +6,7 @@ import {authReducer} from "./authReducer";
 import thunkMiddleware from "redux-thunk";
 
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profilePageReducer,
     messagesPage:messagePageReducer,
     usersPage: UsersPageReducer,
@@ -16,7 +16,7 @@ let reducers = combineReducers({
 
 
 export type ReduxStoreType = ReturnType<typeof createStore>
-export let store: ReduxStoreType = createStore(reducers, applyMiddleware(thunkMiddleware))
+export let store: ReduxStoreType = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 
 

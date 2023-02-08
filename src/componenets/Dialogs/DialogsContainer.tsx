@@ -1,11 +1,9 @@
-import React, {ChangeEvent} from 'react';
-import s from './Dialogs.module.css'
-import {DialogItem} from "./DialogItem/DialogItem";
-import {Message} from "./Message/Message";
+import React from 'react';
 import {changeNewMessageTextInStateAC, sendMessageAC} from "../../Redux/messagePageReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionType, StateType} from "../../Redux/StateAndActionTypes";
+
 
 
 
