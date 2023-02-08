@@ -1,35 +1,38 @@
 import {ActionType, PostsDataType, ProfilePageType, ProfileType} from "./StateAndActionTypes";
 import {v1} from "uuid";
 import avatar from '../img/avatar/avatar.png'
-let userDefault = {
-        aboutMe: "Genius, billionaire, playboy, philanthropist",
-        contacts: {
-            facebook: "facebook.com",
-            website: null,
-            vk: "vk.com",
-            twitter: "https://twitter.com",
-            instagram: "instagram.com",
-            youtube: null,
-            github: "github.com",
-            mainLink: null
-        },
-        lookingForAJob: false,
-        lookingForAJobDescription: "I'm Iron Man",
-        fullName: 'Edward "Tony" Stark',
-        userId: 2,
-        photos: {
-            small: avatar,
-            large: avatar
-        }
-    }
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
-let initialProfilePageState: ProfilePageType =  {
+let userDefault = {
+    aboutMe: "Genius, billionaire, playboy, philanthropist",
+    contacts: {
+        facebook: "facebook.com",
+        website: null,
+        vk: "vk.com",
+        twitter: "https://twitter.com",
+        instagram: "instagram.com",
+        youtube: null,
+        github: "github.com",
+        mainLink: null
+    },
+    lookingForAJob: false,
+    lookingForAJobDescription: "I'm Iron Man",
+    fullName: 'Edward "Tony" Stark',
+    userId: 2,
+    photos: {
+        small: avatar,
+        large: avatar
+    }
+}
+
+let initialProfilePageState: ProfilePageType = {
     profile: null,
     posts: [
         {id: v1(), message: "Hello World", likesCount: 13},
         {id: v1(), message: "It's my first application", likesCount: 34},
     ],
-        newPostText: ""
+    newPostText: ""
 }
 export const profilePageReducer = (state: ProfilePageType = initialProfilePageState, action: ActionType) => {
     switch (action.type) {
@@ -42,7 +45,7 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
                 likesCount: 0
             }
             return newPost.message
-                ? {...state, posts: [...state.posts, newPost], newPostText:''}
+                ? {...state, posts: [...state.posts, newPost], newPostText: ''}
                 : {...state, newPostText: ''}
         case "UPDATE_NEW_POST_TEXT":
             return {...state, newPostText: action.payload.text}
@@ -80,5 +83,15 @@ export const setUserProfileAC = (profile: ProfileType) => (
         payload: {
             profile
         }
-    }as const
+    } as const
 )
+
+
+// --------------- Thunk Creators --------------
+
+
+// ------------------ Checked Auth ---------------
+export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+    authAPI.getUserProfile(userId)
+        .then(data => dispatch(setUserProfileAC(data)))
+}

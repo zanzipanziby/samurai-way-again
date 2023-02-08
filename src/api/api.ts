@@ -35,12 +35,19 @@ export const followingAPI = {
 }
 
 export const authAPI = {
-    checkedAuth(id: number) {
+    getUserProfile(id: number) {
         return (
             instance.get(`profile/${id}`)
                 .then(res => res.data)
         )
+    },
+    auth() {
+        return (
+            instance.get('auth/me')
+                .then(res=> res.data)
+        )
     }
+
 }
 
 

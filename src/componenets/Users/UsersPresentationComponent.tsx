@@ -3,7 +3,7 @@ import s from "./Users.module.css";
 import avatarJura from "../../img/avatar/usersAvatar/Jura.png";
 import {UserTypeWithoutServer} from "../../Redux/StateAndActionTypes";
 import {NavLink} from "react-router-dom";
-import {followingAPI} from "../../api/api";
+
 
 
 type UsersPresentationComponentPropsType = {
@@ -13,9 +13,8 @@ type UsersPresentationComponentPropsType = {
     currentPage: number
     followingInProgress: number[]
     setCurrenPageHandler: (page: number) => void
-    followOnUser: (id: number) => void
-    unfollowOnUser: (id: number) => void
-    toggleFollowingInProgress: (value: boolean, userId: number) => void
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
 }
 
 export const UsersPresentationComponent = (props: UsersPresentationComponentPropsType) => {
@@ -71,10 +70,11 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
                                     className={s.followButton}
                                     disabled={props.followingInProgress.some(id => id === u.id)}
                                     onClick={() => {
-                                        props.toggleFollowingInProgress(true, u.id)
-                                        followingAPI.follow(u.id)
-                                            .then(data => data.resultCode === 0 && props.followOnUser(u.id) && console.log(data))
-                                            .finally(() => props.toggleFollowingInProgress(false, u.id))
+                                        // props.toggleFollowingInProgress(true, u.id)
+                                        // followingAPI.follow(u.id)
+                                        //     .then(data => data.resultCode === 0 && props.followOnUser(u.id) && console.log(data))
+                                        //     .finally(() => props.toggleFollowingInProgress(false, u.id))
+                                        props.followTC(u.id)
                                     }}>
                                     Follow
                                 </button>
@@ -83,10 +83,12 @@ export const UsersPresentationComponent = (props: UsersPresentationComponentProp
                                     className={s.followButton}
                                     disabled={props.followingInProgress.some(id => id === u.id)}
                                     onClick={() => {
-                                        props.toggleFollowingInProgress(true, u.id)
-                                        followingAPI.unfollow(u.id)
-                                            .then(data => data.resultCode === 0 && props.unfollowOnUser(u.id) && console.log(data))
-                                            .finally(() => props.toggleFollowingInProgress(false, u.id))
+                                        // props.toggleFollowingInProgress(true, u.id)
+                                        // followingAPI.unfollow(u.id)
+                                        //     .then(data => data.resultCode === 0 && props.unfollowOnUser(u.id) && console.log(data))
+                                        //     .finally(() => props.toggleFollowingInProgress(false, u.id))
+
+                                        props.unfollowTC(u.id)
                                     }}>
                                     Unfollow
                                 </button>

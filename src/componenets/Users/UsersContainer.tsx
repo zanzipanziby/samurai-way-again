@@ -8,30 +8,13 @@ import {
     setTotalUsersCountAC,
     setUsersAC,
     toggleIsFetchingAC,
-    unfollowOnUserAC
+    unfollowOnUserAC, getUsersTC, followTC, unfollowTC
 } from '../../Redux/usersPageReducer';
 import {UsersPresentationComponent} from './UsersPresentationComponent';
 import {Loader} from "../Loader/Loader";
-import {usersAPI} from "../../api/api";
-
-export type UsersAPIComponentPropsType = {
-    users: Array<UserTypeWithoutServer>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: number[]
 
 
-    setUsers: (users: Array<UserTypeWithoutServer>) => void
-    followOnUser: (id: number) => void
-    unfollowOnUser: (id: number) => void
-    setCurrenPage: (page: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    toggleIsFetching: (value: boolean) => void
-    toggleFollowingInProgress: (value: boolean, userId: number) => void
-}
-
+export type UsersAPIComponentPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 export class UsersAPIComponent extends React.Component <UsersAPIComponentPropsType> {
     constructor(props: UsersAPIComponentPropsType) {
@@ -40,24 +23,14 @@ export class UsersAPIComponent extends React.Component <UsersAPIComponentPropsTy
     }
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-            })
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     setCurrenPageHandler = (page: number) => {
+        this.props.setCurrentPage(page)
+        this.props.getUsersTC(page, this.props.pageSize)
 
-        this.props.setCurrenPage(page)
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(page, this.props.pageSize)
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+
     }
 
     render() {
@@ -73,9 +46,8 @@ export class UsersAPIComponent extends React.Component <UsersAPIComponentPropsTy
                         currentPage={this.props.currentPage}
                         followingInProgress={this.props.followingInProgress}
                         setCurrenPageHandler={this.setCurrenPageHandler}
-                        followOnUser={this.props.followOnUser}
-                        unfollowOnUser={this.props.unfollowOnUser}
-                        toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                        followTC={this.props.followTC}
+                        unfollowTC={this.props.unfollowTC}
                     />
                 }
             </>
@@ -94,7 +66,6 @@ type MapStateToPropsType = {
     followingInProgress: number[]
 
 
-
 }
 const mapStateToProps = (state: StateType): MapStateToPropsType => {
     return {
@@ -111,20 +82,26 @@ type MapDispatchToPropsType = {
     setUsers: (users: UserTypeWithoutServer[]) => void
     followOnUser: (id: number) => void
     unfollowOnUser: (id: number) => void
-    setCurrenPage: (page: number) => void
+    setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsFetching: (value: boolean) => void
     toggleFollowingInProgress: (value: boolean, userId: number) => void
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    followTC: (id: number) => void
+    unfollowTC: (id: number) => void
 
 }
 const MapDispatchToProps: MapDispatchToPropsType = {
     setUsers: setUsersAC,
     followOnUser: followOnUserAC,
     unfollowOnUser: unfollowOnUserAC,
-    setCurrenPage: setCurrentPageAC,
+    setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
     toggleIsFetching: toggleIsFetchingAC,
-    toggleFollowingInProgress: toggleFollowingInProgressAC
+    toggleFollowingInProgress: toggleFollowingInProgressAC,
+    getUsersTC: getUsersTC,
+    followTC: followTC,
+    unfollowTC: unfollowTC
 }
 
 

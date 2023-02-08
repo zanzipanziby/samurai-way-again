@@ -1,4 +1,6 @@
 import {ActionType, AuthType} from "./StateAndActionTypes";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
 
 const initialState = {
     id: 2,
@@ -24,4 +26,12 @@ export const setAuthUserDataAC = (data: AuthType) => {
             data
         }
     }as const
+}
+
+export const authTC = () => (dispatch: Dispatch) => {
+    authAPI.auth()
+        .then(data => {
+            data.resultCode === 0 &&
+            dispatch(setAuthUserDataAC(data.data))
+        })
 }

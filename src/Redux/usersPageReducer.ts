@@ -1,4 +1,6 @@
 import {ActionType, UsersPageType, UserTypeWithoutServer} from "./StateAndActionTypes";
+import {Dispatch} from "redux";
+import {authAPI, followingAPI, usersAPI} from "../api/api";
 
 
 const initialState: UsersPageType = {
@@ -44,7 +46,7 @@ export const UsersPageReducer = (state: UsersPageType = initialState, action: Ac
                 ...state,
                 followingInProgress: action.payload.value
                     ? [...state.followingInProgress, action.payload.userId]
-                    :state.followingInProgress.filter(id=> id !== action.payload.userId)
+                    : state.followingInProgress.filter(id => id !== action.payload.userId)
             }
         default:
             return state
@@ -52,6 +54,10 @@ export const UsersPageReducer = (state: UsersPageType = initialState, action: Ac
 
     }
 }
+
+
+// -----------------  Action Creators -------------------
+
 export type SetTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
 export const setTotalUsersCountAC = (totalUsersCount: number) => {
     return {
@@ -103,13 +109,13 @@ export const setCurrentPageAC = (page: number) => {
 }
 
 export type ToggleIsFetchingACType = ReturnType<typeof toggleIsFetchingAC>
-export const toggleIsFetchingAC = (value: boolean)=> {
+export const toggleIsFetchingAC = (value: boolean) => {
     return {
         type: "TOGGLE_IS_FETCHING",
         payload: {
             value
         }
-    }as const
+    } as const
 }
 
 export type ToggleFollowingInProgressACType = ReturnType<typeof toggleFollowingInProgressAC>
@@ -120,5 +126,40 @@ export const toggleFollowingInProgressAC = (value: boolean, userId: number) => {
             value,
             userId
         }
-    }as const
+    } as const
 }
+
+
+// ---------------------- Thunk Creators  -------------------
+
+
+// -----------  Get Users of User Page-----------
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetchingAC(true))
+
+    usersAPI.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(toggleIsFetchingAC(false))
+            dispatch(setUsersAC(data.items));
+            dispatch(setTotalUsersCountAC(data.totalCount));
+        })
+}
+
+// --------------  Follow to user ----------------
+export const followTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(toggleFollowingInProgressAC(true, id))
+    followingAPI.follow(id)
+        .then(data => data.resultCode === 0 && dispatch(followOnUserAC(id) ) && console.log(data))
+        .finally(() => dispatch(toggleFollowingInProgressAC(false, id)))
+}
+// -----------------  Unfollow user
+export const unfollowTC = (id: number) => (dispatch: Dispatch) => {
+    dispatch(toggleFollowingInProgressAC(true, id))
+    followingAPI.unfollow(id)
+        .then(data => data.resultCode === 0 && dispatch(unfollowOnUserAC(id)) && console.log(data))
+        .finally(() => dispatch(toggleFollowingInProgressAC(false, id)))
+
+}
+
+
+

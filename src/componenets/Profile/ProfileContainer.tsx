@@ -1,11 +1,10 @@
 import React from "react";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {ActionType, ProfileType, StateType} from "../../Redux/StateAndActionTypes";
-import {setUserProfileAC} from "../../Redux/profilePageReducer";
+import { ProfileType, StateType} from "../../Redux/StateAndActionTypes";
+import {getUserProfileTC} from "../../Redux/profilePageReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {authAPI} from "../../api/api";
+
 
 
 type ProfileAPIComponentPropsType =
@@ -17,11 +16,8 @@ class ProfileAPIComponent extends React.Component<ProfileAPIComponentPropsType> 
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId) userId = 2
-        authAPI.checkedAuth(userId)
-            .then(data => {
-                this.props.setUserProfile(data)
-            })
+        if (!userId) {userId = 2}
+        this.props.getUserProfileTC(userId)
 
     }
 
@@ -42,10 +38,10 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => (
 )
 
 type MapDispatchToPropsType = {
-    setUserProfile: (profile: ProfileType) => void
+    getUserProfileTC: (userId: number) => void
 }
 const MapDispatchToProps: MapDispatchToPropsType = {
-    setUserProfile: setUserProfileAC
+    getUserProfileTC: getUserProfileTC
 }
 
 
