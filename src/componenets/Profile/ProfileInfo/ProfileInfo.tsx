@@ -2,6 +2,7 @@ import s from "./ProfileInfo.module.css";
 import banner from "../../../img/banner/banner.png";
 import React from "react";
 import {ProfileType} from "../../../Redux/StateAndActionTypes";
+import {ProfileStatus} from "./Status/Status";
 
 
 
@@ -18,11 +19,8 @@ export const ProfileInfo = (props: ProfileInfoType) => {
                     <div>
                         <img src={props.profile?.photos.large} alt="avatar" className={s.avatar}/>
                     </div>
-                    <div>
-                        <ul>
-                            <li>{props.profile?.aboutMe}</li>
-                        </ul>
-                    </div>
+                    <div>{props.profile?.aboutMe}</div>
+                    <ProfileStatus status={'Hello my friends'}/>
                 </div>
             </div>
         )
