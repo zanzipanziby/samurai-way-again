@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsDataType, MessagesDataType} from "../../Redux/StateAndActionTypes";
-import {Redirect} from "react-router-dom";
+
 
 
 

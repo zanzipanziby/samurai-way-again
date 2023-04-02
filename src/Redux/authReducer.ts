@@ -25,7 +25,7 @@ export const setAuthUserDataAC = (data: AuthType) => {
         payload: {
             data
         }
-    }as const
+    } as const
 }
 
 export const authTC = () => (dispatch: Dispatch) => {
