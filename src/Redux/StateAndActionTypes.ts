@@ -1,4 +1,9 @@
-import {addPostACType, changeNewPostTextInStateACType, SetUserProfileACType} from "./profilePageReducer";
+import {
+    addPostACType,
+    changeNewPostTextInStateACType,
+    SetStatusACType,
+    SetUserProfileACType
+} from "./profilePageReducer";
 import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePageReducer";
 import {
     FollowOnUserACType,
@@ -27,6 +32,7 @@ export type ProfilePageType = {
     profile: ProfileType | null
     posts: Array<PostsDataType>
     newPostText: string
+    status: string
 }
 export type ProfileType = {
     aboutMe: string
@@ -139,3 +145,4 @@ export type ActionType =
     | SetUserProfileACType
     | SetUserDataACType
     | ToggleFollowingInProgressACType
+    | SetStatusACType

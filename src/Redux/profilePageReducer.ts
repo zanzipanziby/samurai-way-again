@@ -2,7 +2,7 @@ import {ActionType, PostsDataType, ProfilePageType, ProfileType} from "./StateAn
 import {v1} from "uuid";
 import avatar from '../img/avatar/avatar.png'
 import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 
 let userDefault = {
     aboutMe: "Genius, billionaire, playboy, philanthropist",
@@ -32,7 +32,8 @@ let initialProfilePageState: ProfilePageType = {
         {id: v1(), message: "Hello World", likesCount: 13},
         {id: v1(), message: "It's my first application", likesCount: 34},
     ],
-    newPostText: ""
+    newPostText: "",
+    status: ""
 }
 export const profilePageReducer = (state: ProfilePageType = initialProfilePageState, action: ActionType) => {
     switch (action.type) {
@@ -49,6 +50,11 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
                 : {...state, newPostText: ''}
         case "UPDATE_NEW_POST_TEXT":
             return {...state, newPostText: action.payload.text}
+        case "SET_STATUS":
+            debugger
+            if(action.payload.status) return {...state, status: action.payload.status}
+            else return {...state,status:"-----"}
+
         default:
             return state
 
@@ -86,12 +92,39 @@ export const setUserProfileAC = (profile: ProfileType) => (
     } as const
 )
 
+export type SetStatusACType = ReturnType<typeof setStatusAC>
+export const setStatusAC = (status: string) => (
+    {
+        type: "SET_STATUS",
+        payload: {
+            status
+        }
+    } as const
+)
+
+
+
 
 // --------------- Thunk Creators --------------
 
 
-// ------------------ Checked Auth ---------------
+// ---  Checked Auth ---
 export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
     authAPI.getUserProfile(userId)
         .then(data => dispatch(setUserProfileAC(data)))
 }
+
+// --- Get User Status ---
+
+export const getUserStatusTC = (id: number) => (dispatch: Dispatch) => {
+    debugger
+    profileAPI.getStatus(id)
+        .then(data => dispatch(setStatusAC(data)))
+}
+// --- Update Status ---
+
+export const updateUserStatusTC = (status: string) => (dispatch: Dispatch) => {
+    profileAPI.updateStatus(status)
+        .then(() => dispatch(setStatusAC(status)))
+}
+

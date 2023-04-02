@@ -27,7 +27,8 @@ export const store: StoreType = {
                 {id: "1", message: "Hello World", likesCount: 13},
                 {id: "2", message: "It's my first application", likesCount: 34},
             ],
-            newPostText: ""
+            newPostText: "",
+            status:""
         },
         messagesPage: {
             dialogs: [
