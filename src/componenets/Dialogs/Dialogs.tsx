@@ -4,6 +4,7 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {AddMessageFormDataType, DialogsDataType, MessagesDataType} from "../../Redux/StateAndActionTypes";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {AddMessageFormRedux} from "./Message/AddMessageForm";
 
 
 type DialogsPropsType = {
@@ -11,7 +12,6 @@ type DialogsPropsType = {
     messages: MessagesDataType[]
     newMessageText: string
     sendMessage: (message: string) => void
-    updateMessageText: (text: string) => void
 }
 
 
@@ -29,10 +29,7 @@ export const Dialogs = (props: DialogsPropsType) => {
 
 
 
-    const changeNewMessageTextInState = (e: ChangeEvent<HTMLTextAreaElement>) => {
 
-        props.updateMessageText(e.currentTarget.value)
-    }
 
     return (
         <div className={s.dialogs}>
@@ -52,18 +49,6 @@ export const Dialogs = (props: DialogsPropsType) => {
 }
 
 
-export const AddMessageForm = (props: InjectedFormProps<AddMessageFormDataType>) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
 
-            <Field component={"textarea"} placeholder={'Enter your message'} name={"message"}/>
-            <div>
-                <button>Send</button>
-            </div>
-        </form>
-    )
-}
-
-const AddMessageFormRedux = reduxForm<AddMessageFormDataType>({form: "DialogAddMessageForm"})(AddMessageForm)
 
 

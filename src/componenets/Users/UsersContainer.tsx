@@ -11,7 +11,7 @@ import {
     unfollowOnUserAC, getUsersTC, followTC, unfollowTC
 } from '../../Redux/usersPageReducer';
 import {UsersPresentationComponent} from './UsersPresentationComponent';
-import {Loader} from "../Loader/Loader";
+import {Loader} from "../common/Loader/Loader";
 import {withAuthRedirect} from "../../Hoc/WithAuthRedirect";
 import {compose} from "redux";
 
