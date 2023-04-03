@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LoginFormDataType} from "../Redux/StateAndActionTypes";
 
 
 const instance = axios.create({
@@ -45,8 +46,11 @@ export const authAPI = {
             instance.get('auth/me')
                 .then(res => res.data)
         )
+    },
+    login(data: LoginFormDataType & { captcha?: boolean }) {
+       return instance.post(`auth/login`, data)
+            .then(res => res.data)
     }
-
 }
 
 
@@ -60,13 +64,13 @@ export const profileAPI = {
     getStatus(id: number) {
         return (
             instance.get(`profile/status/${id}`)
-                .then(res=> res.data)
+                .then(res => res.data)
         )
     },
     updateStatus(status: string) {
         return (
-            instance.put(`profile/status`,{status})
-                .then(res=> res.data)
+            instance.put(`profile/status`, {status})
+                .then(res => res.data)
         )
     }
 }

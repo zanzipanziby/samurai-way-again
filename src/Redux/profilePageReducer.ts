@@ -32,7 +32,6 @@ let initialProfilePageState: ProfilePageType = {
         {id: v1(), message: "Hello World", likesCount: 13},
         {id: v1(), message: "It's my first application", likesCount: 34},
     ],
-    newPostText: "",
     status: ""
 }
 export const profilePageReducer = (state: ProfilePageType = initialProfilePageState, action: ActionType) => {
@@ -42,12 +41,11 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
         case "ADD_POST":
             const newPost: PostsDataType = {
                 id: v1(),
-                message: state.newPostText.trim(),
+                message: action.payload.newPostText.trim(),
                 likesCount: 0
             }
-            return newPost.message
-                ? {...state, posts: [...state.posts, newPost], newPostText: ''}
-                : {...state, newPostText: ''}
+            return {...state, posts: [...state.posts, newPost]}
+
         case "UPDATE_NEW_POST_TEXT":
             return {...state, newPostText: action.payload.text}
         case "SET_STATUS":
@@ -66,9 +64,12 @@ export const profilePageReducer = (state: ProfilePageType = initialProfilePageSt
 //---------------  Create Action Creator --------------------
 
 export type addPostACType = ReturnType<typeof addPostAC>
-export const addPostAC = () => {
+export const addPostAC = (newPostText: string) => {
     return {
         type: "ADD_POST",
+        payload: {
+            newPostText
+        }
     } as const
 }
 

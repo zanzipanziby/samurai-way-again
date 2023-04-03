@@ -11,17 +11,13 @@ import {ActionType, StateType} from "../../../Redux/StateAndActionTypes";
 const mapStateToProps = (state: StateType) => {
     return {
         posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
     }
 }
 
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
-        addPost: () => {
-            dispatch(addPostAC())
-        },
-        updateNewPostText: (text: string) => {
-            dispatch(changeNewPostTextInStateAC(text))
+        addPost: (newPostText: string) => {
+            dispatch(addPostAC(newPostText))
         }
     }
 }

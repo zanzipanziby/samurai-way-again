@@ -1,17 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {PostsDataType} from "../../../Redux/StateAndActionTypes";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 
 
 
 type MyPostsPropsType = {
     posts: PostsDataType[]
-    newPostText: string
-    addPost: () => void
-    updateNewPostText: (text: string) => void
+    addPost: (newPostText: string) => void
 
+}
+
+type MyPostFormDataType = {
+    newPostText: string
 }
 
 
@@ -20,18 +23,11 @@ export const MyPosts = (props: MyPostsPropsType) => {
 
 
     //------------ Add Post ----------------
-    const addPost = () => {
-        props.addPost()
+    const addPost = (data:MyPostFormDataType) => {
+        props.addPost(data.newPostText)
 
 
     }
-
-    //--------------- Add new text for new post -------------------
-    const changeNewPostTextInState = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
-
-    }
-
 
     const renderPosts = props.posts
         .map(p => <li key={p.id}>
@@ -43,21 +39,35 @@ export const MyPosts = (props: MyPostsPropsType) => {
             <h3>
                 My posts
             </h3>
-            <div>
-                <div>
-                    <textarea
-                        value={props.newPostText}
-                        onChange={changeNewPostTextInState}
-                    />
-                </div>
-                <div>
-                    <button onClick={addPost}>add post</button>
-                </div>
-            </div>
+            <MyPostFormRedux onSubmit={addPost}/>
             <ul className={s.postWrapper}>
                 {renderPosts}
             </ul>
         </div>
     );
 };
+
+
+const MyPostsForm = (props: InjectedFormProps<MyPostFormDataType>) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <div>
+                    <Field
+                        name={"newPostText"}
+                        placeholder={"Enter text"}
+                        component={"textarea"}
+                    />
+                </div>
+                <div>
+                    <button>add post</button>
+                </div>
+            </div>
+        </form>
+    );
+};
+
+
+
+export const MyPostFormRedux = reduxForm<MyPostFormDataType>({form: 'My post form'})(MyPostsForm)
 

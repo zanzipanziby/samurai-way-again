@@ -17,23 +17,17 @@ let initialMessagePageState: MessagePageType = {
         {id: v1(), message: "Go playing in video games"},
         {id: v1(), message: "Hey! Dude!"},
     ],
-    newMessageText: ""
 }
 export const messagePageReducer = (state: MessagePageType = initialMessagePageState, action: ActionType) => {
     switch (action.type) {
         case "SEND_MESSAGE":
             const newMessage: MessagesDataType = {
                 id: v1(),
-                message: state.newMessageText.trim()
+                message: action.payload.message.trim()
             }
 
-            return newMessage.message
-                ? {...state, messages: [...state.messages, newMessage], newMessageText: ''}
-                : {...state, newMessageText: ''}
+            return {...state, messages: [...state.messages, newMessage]}
 
-
-        case "UPDATE_NEW_MESSAGE_TEXT":
-            return {...state, newMessageText: action.payload.text}
         default:
             return state
     }
@@ -43,19 +37,11 @@ export const messagePageReducer = (state: MessagePageType = initialMessagePageSt
 //---------------  Create Action Creator --------------------
 
 export type sendMessageACType = ReturnType<typeof sendMessageAC>
-export const sendMessageAC = () => {
+export const sendMessageAC = (message:string) => {
     return {
-        type: "SEND_MESSAGE"
-    } as const
-}
-
-export type changeNewMessageTextInStateACType = ReturnType<typeof changeNewMessageTextInStateAC>
-export const changeNewMessageTextInStateAC = (text: string) => {
-    return {
-        type: "UPDATE_NEW_MESSAGE_TEXT",
+        type: "SEND_MESSAGE",
         payload: {
-            text
+            message
         }
     } as const
-
 }

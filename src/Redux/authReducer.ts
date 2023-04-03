@@ -1,4 +1,4 @@
-import {ActionType, AuthType} from "./StateAndActionTypes";
+import {ActionType, AuthType, LoginFormDataType} from "./StateAndActionTypes";
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 

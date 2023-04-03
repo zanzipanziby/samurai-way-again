@@ -27,7 +27,6 @@ export const store: StoreType = {
                 {id: "1", message: "Hello World", likesCount: 13},
                 {id: "2", message: "It's my first application", likesCount: 34},
             ],
-            newPostText: "",
             status:""
         },
         messagesPage: {
@@ -45,7 +44,6 @@ export const store: StoreType = {
                 {id: '4', message: "Go playing in video games"},
                 {id: '5', message: "Hey! Dude!"},
             ],
-            newMessageText: ""
         },
         usersPage: {
             users: [],

@@ -4,7 +4,7 @@ import {
     SetStatusACType,
     SetUserProfileACType
 } from "./profilePageReducer";
-import {changeNewMessageTextInStateACType, sendMessageACType} from "./messagePageReducer";
+import {sendMessageACType} from "./messagePageReducer";
 import {
     FollowOnUserACType,
     SetCurrentPageACType,
@@ -18,7 +18,7 @@ import {store} from "./redux-store";
 import {SetUserDataACType} from "./authReducer";
 
 
-// ------------   StateType   ---------------\\
+// ------------   StateTypes   ---------------\\
 export type StateType = {
     messagesPage: MessagePageType
     profilePage: ProfilePageType
@@ -27,11 +27,10 @@ export type StateType = {
 }
 
 
-// ------------   ProfilePageType   -----------------\\
+// ------------   ProfilePageTypes   -----------------\\
 export type ProfilePageType = {
     profile: ProfileType | null
     posts: Array<PostsDataType>
-    newPostText: string
     status: string
 }
 export type ProfileType = {
@@ -66,11 +65,10 @@ export type PostsDataType = {
 }
 
 
-//----------------   MessagePageType   -----------------------\\
+//----------------   MessagePageTypes   -----------------------\\
 export type MessagePageType = {
     dialogs: Array<DialogsDataType>
     messages: Array<MessagesDataType>
-    newMessageText: string
 }
 export type DialogsDataType = {
     id: string
@@ -81,8 +79,12 @@ export type MessagesDataType = {
     message: string
 }
 
+export type AddMessageFormDataType = {
+    message: string
+}
 
-// ------------ UserType for UserPageType (LEGACY) -----------\\
+
+// ------------ UserType for UserPageTypes (LEGACY) -----------\\
 export type UserType = {
     id: string
     avatar: string
@@ -97,7 +99,7 @@ export type LocationType = {
 }
 
 
-// ------------  UserPageType --------------\\
+// ------------  UserPageTypes --------------\\
 export type UsersPageType = {
     // users: Array<UserType>
     users: Array<UserTypeWithoutServer>
@@ -120,6 +122,16 @@ export type UserTypeWithoutServer = {
 }
 
 
+
+// ------------   LoginPageTypes  ----------\\
+
+export type LoginFormDataType = {
+    login: string
+    password: string
+    rememberMe:boolean
+}
+
+
 //-----------  AuthType ----------------\\
 
 export type AuthType = {
@@ -129,12 +141,14 @@ export type AuthType = {
     isAuth: boolean
 }
 
+
+
+
 // ---------------   ActionType   -----------\\
 
 export type ActionType =
     | addPostACType
     | changeNewPostTextInStateACType
-    | changeNewMessageTextInStateACType
     | sendMessageACType
     | FollowOnUserACType
     | UnfollowOnUserACType
