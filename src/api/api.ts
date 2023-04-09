@@ -50,6 +50,10 @@ export const authAPI = {
     login(data: LoginFormDataType & { captcha?: boolean }) {
        return instance.post(`auth/login`, data)
             .then(res => res.data)
+    },
+    logout(){
+        return instance.delete(`auth/login`)
+            .then(res=>res.data)
     }
 }
 

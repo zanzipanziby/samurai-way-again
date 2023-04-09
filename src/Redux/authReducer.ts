@@ -1,6 +1,7 @@
-import {ActionType, AuthType, LoginFormDataType} from "./StateAndActionTypes";
-import {Dispatch} from "redux";
+import {ActionType, AppDispatch, AuthType, LoginFormDataType} from "./StateAndActionTypes";
+
 import {authAPI} from "../api/api";
+
 
 const initialState = {
     id: 2,
@@ -13,6 +14,8 @@ export const authReducer = (state: AuthType = initialState, action: ActionType) 
     switch (action.type) {
         case "SET_AUTH_USER_DATA":
             return {...state, ...action.payload.data, isAuth: true}
+        case "LOGOUT":
+            return {id: null, email: '', login: '', isAuth: false}
         default:
             return state
     }
@@ -28,10 +31,34 @@ export const setAuthUserDataAC = (data: AuthType) => {
     } as const
 }
 
-export const authTC = () => (dispatch: Dispatch) => {
+export type logoutACType = ReturnType<typeof logoutAC>
+export const logoutAC = () => {
+    return {
+        type: "LOGOUT"
+    } as const
+}
+
+export const authTC = () => (dispatch: AppDispatch) => {
     authAPI.auth()
         .then(data => {
             data.resultCode === 0 &&
             dispatch(setAuthUserDataAC(data.data))
+        })
+}
+export const authLoginTC = (data: LoginFormDataType) => (dispatch: AppDispatch) => {
+    authAPI.login(data)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(authTC())
+            }
+        })
+}
+
+export const authLogoutTC = () => (dispatch: AppDispatch) => {
+    authAPI.logout()
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(logoutAC())
+            }
         })
 }

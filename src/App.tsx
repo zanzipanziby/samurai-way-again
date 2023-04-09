@@ -11,7 +11,7 @@ import {DialogsContainer} from "./componenets/Dialogs/DialogsContainer";
 import {UsersContainer} from "./componenets/Users/UsersContainer";
 import {ProfileContainer} from "./componenets/Profile/ProfileContainer";
 import HeaderContainerComponent from "./componenets/Header/HeaderContainerComponent";
-import {Login} from "./componenets/Login/Login";
+import {ConnectedLogin} from "./componenets/Login/Login";
 
 type AppPropsType = {}
 
@@ -30,7 +30,7 @@ function App(props: AppPropsType) {
                     <Route render={() => <Music/>} path={'/music'}/>
                     <Route render={() => <Settings/>} path={'/settings'}/>
                     <Route render={() => <UsersContainer/>} path={'/users'}/>
-                    <Route render={() => <Login/>} path={'/login'}/>
+                    <Route render={() => <ConnectedLogin/>} path={'/login'}/>
 
                 </div>
             </div>

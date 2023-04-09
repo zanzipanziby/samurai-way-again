@@ -1,4 +1,4 @@
-import {ActionType, PostsDataType, ProfilePageType, ProfileType} from "./StateAndActionTypes";
+import {ActionType, AppDispatch, PostsDataType, ProfilePageType, ProfileType} from "./StateAndActionTypes";
 import {v1} from "uuid";
 import avatar from '../img/avatar/avatar.png'
 import {Dispatch} from "redux";
@@ -110,22 +110,24 @@ export const setStatusAC = (status: string) => (
 
 
 // ---  Checked Auth ---
-export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+export const getUserProfileTC = (userId: number) => (dispatch: AppDispatch) => {
     authAPI.getUserProfile(userId)
         .then(data => dispatch(setUserProfileAC(data)))
 }
 
 // --- Get User Status ---
 
-export const getUserStatusTC = (id: number) => (dispatch: Dispatch) => {
+export const getUserStatusTC = (id: number) => (dispatch: AppDispatch) => {
     debugger
     profileAPI.getStatus(id)
         .then(data => dispatch(setStatusAC(data)))
 }
 // --- Update Status ---
 
-export const updateUserStatusTC = (status: string) => (dispatch: Dispatch) => {
+export const updateUserStatusTC = (status: string) => (dispatch: AppDispatch) => {
     profileAPI.updateStatus(status)
         .then(() => dispatch(setStatusAC(status)))
 }
+
+
 

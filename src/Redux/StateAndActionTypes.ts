@@ -14,9 +14,15 @@ import {
     ToggleIsFetchingACType,
     UnfollowOnUserACType
 } from "./usersPageReducer";
-import {store} from "./redux-store";
-import {SetUserDataACType} from "./authReducer";
+import {rootReducer, store} from "./redux-store";
+import {logoutACType, SetUserDataACType} from "./authReducer";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
 
+export type RootState = ReturnType<typeof rootReducer>
+export type RootState2 = ReturnType<typeof store.getState>
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
 
 // ------------   StateTypes   ---------------\\
 export type StateType = {
@@ -122,13 +128,12 @@ export type UserTypeWithoutServer = {
 }
 
 
-
 // ------------   LoginPageTypes  ----------\\
 
 export type LoginFormDataType = {
     login: string
     password: string
-    rememberMe:boolean
+    rememberMe?: boolean
 }
 
 
@@ -140,8 +145,6 @@ export type AuthType = {
     login: string | null
     isAuth: boolean
 }
-
-
 
 
 // ---------------   ActionType   -----------\\
@@ -160,3 +163,4 @@ export type ActionType =
     | SetUserDataACType
     | ToggleFollowingInProgressACType
     | SetStatusACType
+    | logoutACType

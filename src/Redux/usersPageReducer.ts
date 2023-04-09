@@ -1,6 +1,5 @@
-import {ActionType, UsersPageType, UserTypeWithoutServer} from "./StateAndActionTypes";
-import {Dispatch} from "redux";
-import {authAPI, followingAPI, usersAPI} from "../api/api";
+import {ActionType, AppDispatch, UsersPageType, UserTypeWithoutServer} from "./StateAndActionTypes";
+import {followingAPI, usersAPI} from "../api/api";
 
 
 const initialState: UsersPageType = {
@@ -134,7 +133,7 @@ export const toggleFollowingInProgressAC = (value: boolean, userId: number) => {
 
 
 // -----------  Get Users of User Page-----------
-export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: AppDispatch) => {
     dispatch(toggleIsFetchingAC(true))
 
     usersAPI.getUsers(currentPage, pageSize)
@@ -146,14 +145,14 @@ export const getUsersTC = (currentPage: number, pageSize: number) => (dispatch: 
 }
 
 // --------------  Follow to user ----------------
-export const followTC = (id: number) => (dispatch: Dispatch) => {
+export const followTC = (id: number) => (dispatch: AppDispatch) => {
     dispatch(toggleFollowingInProgressAC(true, id))
     followingAPI.follow(id)
         .then(data => data.resultCode === 0 && dispatch(followOnUserAC(id) ) && console.log(data))
         .finally(() => dispatch(toggleFollowingInProgressAC(false, id)))
 }
 // -----------------  Unfollow user
-export const unfollowTC = (id: number) => (dispatch: Dispatch) => {
+export const unfollowTC = (id: number) => (dispatch: AppDispatch) => {
     dispatch(toggleFollowingInProgressAC(true, id))
     followingAPI.unfollow(id)
         .then(data => data.resultCode === 0 && dispatch(unfollowOnUserAC(id)) && console.log(data))
