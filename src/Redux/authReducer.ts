@@ -40,11 +40,12 @@ export const logoutAC = () => {
 }
 
 export const authTC = () => (dispatch: AppDispatch) => {
-    authAPI.auth()
+    return authAPI.auth()
         .then(data => {
             data.resultCode === 0 &&
             dispatch(setAuthUserDataAC(data.data))
         })
+
 }
 export const authLoginTC = (data: LoginFormDataType) => (dispatch: AppDispatch) => {
     // return dispatch(stopSubmit("login", {_error: "Email or Pass uncorrected"}))

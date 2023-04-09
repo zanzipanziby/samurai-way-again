@@ -2,7 +2,7 @@
 
 import {profilePageReducer} from "./profilePageReducer";
 import {messagePageReducer} from "./messagePageReducer";
-import {ActionType, AuthType, ProfileType, StateType} from "./StateAndActionTypes";
+import {ActionType, AppType, AuthType, ProfileType, StateType} from "./StateAndActionTypes";
 
 
 export type StoreType = {
@@ -53,7 +53,10 @@ export const store: StoreType = {
             isFetching: true,
             followingInProgress: []
         },
-        auth:{} as AuthType
+        auth:{} as AuthType,
+        app:{} as AppType
+
+
 
 
     },

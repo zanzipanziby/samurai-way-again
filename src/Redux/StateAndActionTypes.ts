@@ -18,6 +18,7 @@ import {rootReducer, store} from "./redux-store";
 import {logoutACType, SetUserDataACType} from "./authReducer";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
+import {SetInitializedACType} from "./app-reducer";
 
 export type RootState = ReturnType<typeof rootReducer>
 export type RootState2 = ReturnType<typeof store.getState>
@@ -30,6 +31,7 @@ export type StateType = {
     profilePage: ProfilePageType
     usersPage: UsersPageType
     auth: AuthType
+    app: AppType
 }
 
 
@@ -146,6 +148,11 @@ export type AuthType = {
     isAuth: boolean
 }
 
+//-----------  AppType ----------------\\
+export type AppType = {
+    isInitialized: boolean
+}
+
 
 // ---------------   ActionType   -----------\\
 
@@ -164,3 +171,4 @@ export type ActionType =
     | ToggleFollowingInProgressACType
     | SetStatusACType
     | logoutACType
+    | SetInitializedACType

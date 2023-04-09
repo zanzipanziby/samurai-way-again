@@ -9,16 +9,10 @@ import {StateType} from "../../Redux/StateAndActionTypes";
 type HeaderContainerComponentType = {
     isAuth: boolean
     login: string | null
-
-    authTC: () => void
     authLogoutTC: () => void
 }
 
 class HeaderContainerComponent extends React.Component<HeaderContainerComponentType> {
-    componentDidMount() {
-       this.props.authTC()
-    }
-
     render() {
 
         return (
@@ -34,6 +28,6 @@ const mapStateToProps = (state: StateType) => ({
 )
 
 
-export default connect(mapStateToProps, {authTC: authTC, authLogoutTC: authLogoutTC})(HeaderContainerComponent)
+export default connect(mapStateToProps, { authLogoutTC: authLogoutTC})(HeaderContainerComponent)
 
 
