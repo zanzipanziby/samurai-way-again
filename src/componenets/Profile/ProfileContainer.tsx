@@ -18,7 +18,7 @@ class ProfileAPIComponent extends React.Component<ProfileAPIComponentPropsType> 
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = 26993
+            userId = this.props.authorizedUserId
         }
         this.props.getUserProfileTC(userId)
         this.props.getUserStatusTC(userId)
@@ -37,15 +37,18 @@ class ProfileAPIComponent extends React.Component<ProfileAPIComponentPropsType> 
 type MapStateToPropsType = {
     profile: ProfileType | null
     status: string
+    authorizedUserId: number | null
 }
 const mapStateToProps = (state: StateType): MapStateToPropsType => (
     {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        authorizedUserId: state.auth.id
     }
 )
 
 type MapDispatchToPropsType = {
+
     getUserProfileTC: (userId: number) => void
     getUserStatusTC: (userId: number) => void
     updateStatusTC: (status: string) => void

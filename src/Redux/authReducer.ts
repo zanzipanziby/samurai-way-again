@@ -1,6 +1,7 @@
 import {ActionType, AppDispatch, AuthType, LoginFormDataType} from "./StateAndActionTypes";
 
 import {authAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 
 const initialState = {
@@ -46,10 +47,14 @@ export const authTC = () => (dispatch: AppDispatch) => {
         })
 }
 export const authLoginTC = (data: LoginFormDataType) => (dispatch: AppDispatch) => {
+    // return dispatch(stopSubmit("login", {_error: "Email or Pass uncorrected"}))
     authAPI.login(data)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(authTC())
+            } else {
+
+                dispatch(stopSubmit("login", {_error: data.messages.length > 0 ? data.messages[0] : "some error"}))
             }
         })
 }

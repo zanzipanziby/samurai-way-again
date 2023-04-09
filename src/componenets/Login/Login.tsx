@@ -17,7 +17,9 @@ const Login = (props: LoginPropsType) => {
         props.authLoginTC(data)
     }
 
-    if(props.isAuth) {return <Redirect to={"profile"}/>}
+    if (props.isAuth) {
+        return <Redirect to={"profile"}/>
+    }
 
     return (
         <div>
@@ -43,6 +45,7 @@ const LoginForm = (props: InjectedFormProps<LoginFormDataType>) => {
             <div>
                 <Field component={"input"} type="checkbox" name={"rememberMe"}/><span>Remember me</span>
             </div>
+            {props.error && < div style={{color: "red"}}> {props.error}</div>}
             <div>
                 <button>Sign in</button>
             </div>
@@ -54,9 +57,9 @@ const LoginReduxForm = reduxForm<LoginFormDataType>({
     form: 'login'
 })(LoginForm)
 
-const mapStateToProps = (state:RootState) => {
+const mapStateToProps = (state: RootState) => {
     return {
-        isAuth:state.auth.isAuth
+        isAuth: state.auth.isAuth
     }
 }
 
