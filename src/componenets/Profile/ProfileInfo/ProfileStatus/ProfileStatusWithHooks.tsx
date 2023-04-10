@@ -47,6 +47,8 @@ export const  ProfileStatusWithHooks = (props:ProfileStatusPropsType) =>  {
     const [editMode,setEditMode] = useState(false)
     const [status,setStatus] = useState(props.status)
 
+    useEffect(()=>{setStatus(props.status)},[props.status])
+
 
 
 
