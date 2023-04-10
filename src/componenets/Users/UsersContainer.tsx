@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StateType, UserTypeWithoutServer} from '../../Redux/StateAndActionTypes';
+import {RootStateType, UserTypeWithoutServer} from '../../Redux/StateAndActionTypes';
 import {
     toggleFollowingInProgressAC,
     followOnUserAC,
@@ -14,6 +14,14 @@ import {UsersPresentationComponent} from './UsersPresentationComponent';
 import {Loader} from "../common/Loader/Loader";
 import {withAuthRedirect} from "../../Hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from "../../Redux/users-selectors";
 
 
 export type UsersAPIComponentPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -29,7 +37,7 @@ export class UsersAPIComponent extends React.Component <UsersAPIComponentPropsTy
     }
 
     setCurrenPageHandler = (page: number) => {
-        this.props.setCurrentPage(page)
+        // this.props.setCurrentPage(page) -------  Realising in userPageReducer  138 line
         this.props.getUsersTC(page, this.props.pageSize)
 
 
@@ -69,14 +77,14 @@ type MapStateToPropsType = {
 
 
 }
-const mapStateToProps = (state: StateType): MapStateToPropsType => {
+const mapStateToProps = (state: RootStateType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
 
     }
 }

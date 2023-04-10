@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {LoginFormDataType, RootState, RootState2} from "../../Redux/StateAndActionTypes";
+import {LoginFormDataType, RootStateType, RootState2} from "../../Redux/StateAndActionTypes";
 import {Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
@@ -57,7 +57,7 @@ const LoginReduxForm = reduxForm<LoginFormDataType>({
     form: 'login'
 })(LoginForm)
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootStateType) => {
     return {
         isAuth: state.auth.isAuth
     }

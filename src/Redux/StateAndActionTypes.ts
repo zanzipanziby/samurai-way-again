@@ -20,10 +20,10 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 import {SetInitializedACType} from "./app-reducer";
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootStateType = ReturnType<typeof rootReducer>
 export type RootState2 = ReturnType<typeof store.getState>
-export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AnyAction>
+export type AppDispatch = ThunkDispatch<RootStateType, unknown, AnyAction>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, AnyAction>
 
 // ------------   StateTypes   ---------------\\
 export type StateType = {

@@ -16,7 +16,7 @@ import {connect} from "react-redux";
 import {authTC} from "./Redux/authReducer";
 import {compose} from "redux";
 import {initializeAppTC} from "./Redux/app-reducer";
-import {RootState} from "./Redux/StateAndActionTypes";
+import {RootStateType} from "./Redux/StateAndActionTypes";
 import {Loader} from "./componenets/common/Loader/Loader";
 
 type AppPropsType = {
@@ -57,7 +57,7 @@ class App extends React.Component<AppPropsType> {
 
 
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: RootStateType) => ({
     isInitialized: state.app.isInitialized
 })
 
